@@ -8,35 +8,43 @@
             <Nav />
         </LeftSidebar>
         <Main>
-            <!-- content -->
+            <div class="m-house-index">
+                <Map/>
+            </div>
             <RightSidebar>
-                <Extend/>
+                <Extend />
             </RightSidebar>
-            <Footer/>
+            <Footer />
         </Main>
     </div>
 </template>
 
 <script>
-import Info from '@/components/Info.vue';
-import Nav from '@/components/Nav.vue';
-import Extend from '@/components/Extend.vue';
+import Info from "@/components/Info.vue";
+import Nav from "@/components/Nav.vue";
+import Extend from "@/components/Extend.vue";
+import Map from "@/components/Map.vue";
 
-    export default {
-        name : 'App',
-        props:[],
-        data : function(){
-            return {
-                
-            }
-        },
-        computed:{},
-        methods:{},
-        mounted:function(){},
-        components:{
-            Info,
-            Nav,
-            Extend
-        }
-    }
+export default {
+    name: "App",
+    props: [],
+    data: function () {
+        return {
+            
+        };
+    },
+    computed: {},
+    methods: {},
+    mounted: function () {},
+    components: {
+        Info,
+        Nav,
+        Extend,
+        Map
+    },
+};
 </script>
+
+<style lang="less">
+@import "./assets/css/index.less";
+</style>

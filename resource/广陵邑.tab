@@ -1,0 +1,35 @@
+nMapID	nLandIndex	szLandName	szQuality	nArea	nPrice	szComponentName	nPosX	nPosY	szIconPath	nNomalFrame	nOverFrame	nDownFrame
+0									ui/Image/JYMap/JYUi_02.UITex	2	4	6
+455	1	句容里一保	普通宅邸	7000	1	Handle_MHouse1	1130	968				
+455	2	挂剑里一邻	普通宅邸	2080	1	Handle_MHouse2	1004	1215				
+455	3	挂剑里二保	普通宅邸	3640	1	Handle_MHouse3	906	1439				
+455	4	挂剑里三邻	普通宅邸	2080	1	Handle_MHouse4	1092	1579				
+455	5	挂剑里四邻	普通宅邸	1200	1	Handle_MHouse5	1209	1415				
+455	6	通寰里一保	普通宅邸	3640	1	Handle_MHouse6	1519	1176				
+455	7	通寰里二邻	普通宅邸	2080	1	Handle_MHouse7	1547	1424				
+455	8	通寰里三邻	普通宅邸	2080	1	Handle_MHouse8	1713	1094				
+455	9	通寰里四邻	普通宅邸	2080	1	Handle_MHouse9	1802	1234				
+455	10	通寰里五邻	普通宅邸	2080	1	Handle_MHouse10	1799	1490				
+455	11	观桥里一保	普通宅邸	3640	1	Handle_MHouse11	2019	1014				
+455	12	观桥里二邻	普通宅邸	2080	1	Handle_MHouse12	2279	977				
+455	13	观桥里三邻	普通宅邸	2080	1	Handle_MHouse13	2056	1244				
+455	14	观桥里四邻	普通宅邸	2080	1	Handle_MHouse14	2258	1210				
+455	15	清茨里一邻	普通宅邸	1200	1	Handle_MHouse15	1298	1857				
+455	16	清茨里二邻	普通宅邸	2080	1	Handle_MHouse16	1412	1972				
+455	17	鱼雁里一邻	普通宅邸	2080	1	Handle_MHouse17	1775	1809				
+455	18	鱼雁里二邻	普通宅邸	2080	1	Handle_MHouse18	1914	1727				
+455	19	鱼雁里三保	普通宅邸	3640	1	Handle_MHouse19	2143	1631				
+455	20	吴亭里一邻	普通宅邸	2080	1	Handle_MHouse20	779	2124				
+455	21	吴亭里二保	普通宅邸	3640	1	Handle_MHouse21	826	2370				
+455	22	吴亭里三邻	普通宅邸	2080	1	Handle_MHouse22	1093	2116				
+455	23	吴亭里四邻	普通宅邸	2080	1	Handle_MHouse23	1093	2472				
+455	24	吴亭里五邻	普通宅邸	1200	1	Handle_MHouse24	1294	2188				
+455	25	吴亭里六邻	普通宅邸	2080	1	Handle_MHouse25	1280	2437				
+455	26	吴亭里七邻	普通宅邸	1200	1	Handle_MHouse26	1453	2388				
+455	27	襟江里一邻	普通宅邸	1200	1	Handle_MHouse27	1769	2341				
+455	28	襟江里二邻	普通宅邸	2080	1	Handle_MHouse28	1864	2071				
+455	29	襟江里三保	普通宅邸	3640	1	Handle_MHouse29	1908	2280				
+455	30	襟江里四邻	普通宅邸	2080	1	Handle_MHouse30	2048	1974				
+455	31	襟江里五邻	普通宅邸	2080	1	Handle_MHouse31	2103	2284				
+455	32	襟江里六邻	普通宅邸	1200	1	Handle_MHouse32	2298	1876				
+455	33	襟江里七邻	普通宅邸	2080	1	Handle_MHouse33	2298	2036				
