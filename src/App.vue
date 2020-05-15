@@ -1,20 +1,21 @@
 <template>
     <div id="app">
-        <Header />
-        <Breadcrumb>
+        <Header></Header>
+        <Breadcrumb name="结庐江湖" slug="house" root="/house" publishEnable="true">
+            <img slot="logo" svg-inline src="./assets/img/house.svg" />
             <Info />
         </Breadcrumb>
         <LeftSidebar>
             <Nav />
         </LeftSidebar>
-        <Main>
+        <Main :withoutRight="false">
             <div class="m-house-index">
                 <Map/>
             </div>
             <RightSidebar>
-                <Extend />
+                <Extend/>
             </RightSidebar>
-            <Footer />
+            <Footer></Footer>
         </Main>
     </div>
 </template>
