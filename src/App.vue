@@ -1,50 +1,40 @@
 <template>
     <div id="app">
         <Header />
-        <Breadcrumb>
-            <Info />
+        <Breadcrumb name="结庐江湖" slug="slug" root="/" publishEnable="true">
+            <img slot="logo" svg-inline src="./assets/img/house.svg" />
+            <div class="u-stat">街南绿树春饶絮，雪满游春路。树头花艳杂娇云，树底人家朱户。</div>
+            <!-- <Info /> -->
         </Breadcrumb>
-        <LeftSidebar>
-            <Nav />
-        </LeftSidebar>
+        <LeftSidebar><Nav /></LeftSidebar>
         <Main>
-            <div class="m-house-index">
-                <Map/>
-            </div>
-            <RightSidebar>
-                <Extend />
-            </RightSidebar>
+            <div class="m-house-index"><router-view></router-view></div>
+            <RightSidebar><Extend /></RightSidebar>
             <Footer />
         </Main>
     </div>
 </template>
 
 <script>
-import Info from "@/components/Info.vue";
-import Nav from "@/components/Nav.vue";
-import Extend from "@/components/Extend.vue";
-import Map from "@/components/Map.vue";
+import Nav from '@/components/Nav.vue';
+import Extend from '@/components/Extend.vue';
 
 export default {
-    name: "App",
+    name: 'App',
     props: [],
-    data: function () {
-        return {
-            
-        };
+    data: function() {
+        return {};
     },
     computed: {},
     methods: {},
-    mounted: function () {},
+    mounted: function() {},
     components: {
-        Info,
         Nav,
-        Extend,
-        Map
-    },
+        Extend
+    }
 };
 </script>
 
 <style lang="less">
-@import "./assets/css/index.less";
+@import './assets/css/index.less';
 </style>
