@@ -63,7 +63,6 @@ module.exports = {
 			.use("vue-svg-inline-loader")
             .loader("vue-svg-inline-loader")
             
-        config.devServer.disableHostCheck(true)
 
 
         //💖 import common less var * mixin ~
