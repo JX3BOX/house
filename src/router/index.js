@@ -1,3 +1,4 @@
+import Vue from "vue";
 import VueRouter from "vue-router";
 
 import Map from "../components/Map.vue";

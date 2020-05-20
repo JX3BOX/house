@@ -1,13 +1,12 @@
+// 第三方UI组件
+import Vue from "vue";
 Vue.config.productionTip = false;
-
-// import Vue from "vue";
 import ElementUI from "element-ui";
-import "element-ui/lib/theme-chalk/index.css";
 Vue.use(ElementUI);
-
-import JX3BOX from '@jx3box/jx3box-common'
+// import Vue from "vue";
 import JX3BOX_UI from '@jx3box/jx3box-common-ui'
-Vue.use(JX3BOX);
+// 通用UI模块
+import "@jx3box/jx3box-common/css/element.css";
 Vue.use(JX3BOX_UI);
 
 import router from "./router";
