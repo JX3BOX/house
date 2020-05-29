@@ -18,13 +18,15 @@ export default {
 
 <style lang="less">
 .m-info {
+    .fl;
 }
 @media screen and (max-width:@ipad){
     .m-info{
-        .u-stat{
+        // .u-stat{
             white-space:nowrap;
             overflow:auto;
-        }
+        // }
+        float:none;
     }
 }
 </style>
