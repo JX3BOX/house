@@ -55,8 +55,7 @@ export default {
         let params = new URLSearchParams(location.search);
         this.$store.state.pid = params.get("pid") || getRewrite("pid");
         this.$store.state.mode = this.$store.state.pid ? "single" : "list";
-        this.$store.state.subtype = this.$route.params.subtype;
-        console.log(this.mode)
+        this.$store.state.subtype = getRewrite("subtype");
     },
     components: {
         Info,
