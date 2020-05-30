@@ -1,0 +1,25 @@
+.m-single-title{
+    span{
+        &:after{
+            content :"／";
+            padding:0 10px;
+            color:#888;
+            font-weight:300;
+        }
+        &:last-child{
+            &::after{
+                .none;
+            }
+        }
+    }
+}
+
+.m-house-pics{
+    .u-item{
+        background-color:@bg-light;
+    }
+}
+
+.m-house-data{
+    margin:20px;
+}
