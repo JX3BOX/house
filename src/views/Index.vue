@@ -1,7 +1,7 @@
 <template>
     <div class="m-blueprint">
-        <div class="m-blueprint-list">
-            <el-row :gutter="20">
+        <div class="m-blueprint-list" v-if="data.length">
+            <el-row :gutter="20" v-loading="loading">
                 <el-col :span="6" v-for="(item, i) in data" :key="i"
                     ><div class="u-item">
                         <a class="u-pic" :href="item.post.ID | postLink"
@@ -43,7 +43,7 @@
                 >
             </el-row>
         </div>
-        <!-- <el-alert
+        <el-alert
             v-else
             class="m-archive-null"
             title="没有找到相关条目"
@@ -70,7 +70,7 @@
             layout="total, prev, pager, next, jumper"
             :total="total"
         >
-        </el-pagination> -->
+        </el-pagination>
         <RightSidebar>
             <list_side />
         </RightSidebar>

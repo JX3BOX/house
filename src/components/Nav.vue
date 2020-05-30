@@ -1,6 +1,6 @@
 <template>
     <nav class="m-nav">
-        <!-- <single_nav v-if="mode == 'single'" /> -->
+        <single_nav v-if="mode == 'single'" />
         <list_nav v-if="mode == 'list'" />
     </nav>
 </template>
@@ -21,7 +21,7 @@ export default {
     methods: {},
     mounted: function() {},
     components: {
-        // single_nav,
+        single_nav,
         list_nav,
     },
 };

@@ -17,7 +17,7 @@
         </LeftSidebar>
         <Main :withoutRight="false">
             <list v-if="mode == 'list'" />
-            <!-- <single v-if="mode == 'single'" /> -->
+            <single v-if="mode == 'single'" />
             <Footer></Footer>
         </Main>
     </div>
@@ -62,7 +62,7 @@ export default {
         Nav,
         // Extend,
         list,
-        // single,
+        single,
     },
 };
 </script>

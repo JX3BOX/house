@@ -3,9 +3,13 @@
         <header class="m-single-header">
             <div class="m-single-title">
                 <!-- 标题 -->
-                <a class="u-title u-sub-block" :href="url">{{
-                    post.post_title
-                }}</a>
+                <!-- <a class="u-title u-sub-block" :href="url">{{
+                    post.post_title || '无标题'
+                }}</a> -->
+                <span class="u-server">{{ meta.server || "未知服" }}</span>
+                <span class="u-map">{{ meta.map || "未知" }}</span>
+                <span class="u-area">{{ meta.area || "未知" }}线</span>
+                <span class="u-num">{{ meta.num || "未知" }}号</span>
             </div>
 
             <div class="m-single-info">
@@ -18,12 +22,12 @@
                 </div>
 
                 <!-- tags -->
-                <div class="u-meta u-sub-block" v-if="post.post_subtype == '1'">
+                <!-- <div class="u-meta u-sub-block" v-if="post.post_subtype == '1'">
                     <em class="u-label">标签</em>
                     <span class="u-value">
                         {{ format(post.post_meta, "tag") }}
                     </span>
-                </div>
+                </div> -->
 
                 <!-- 发布日期 -->
                 <span class="u-podate u-sub-block" title="发布日期">
@@ -51,25 +55,59 @@
             <div class="m-single-panel">
                 <!-- 收藏 -->
                 <Fav />
-                <el-button
+                <!-- <el-button
                     size="mini"
                     type="primary"
                     disabled
                     title="即将推出.."
                     ><i class="el-icon-bell"></i><span>订阅</span></el-button
-                >
+                > -->
             </div>
         </header>
 
         <div class="m-single-meta">
+            <el-carousel
+                class="m-house-pics"
+                :interval="4000"
+                type="card"
+                height="400px"
+                v-if="meta.pics && meta.pics.length"
+            >
+                <el-carousel-item
+                    class="u-item"
+                    v-for="(item, i) in meta.pics"
+                    :key="i"
+                >
+                    <el-image :src="item.url" :preview-src-list="srcList">
+                    </el-image>
+                </el-carousel-item>
+            </el-carousel>
+
+            <div class="m-house-data" v-if="meta.hasData && meta.blueprint">
+                <el-table :data="meta.blueprint" v-if="meta.blueprint.length">
+                    <el-table-column prop="type" label="蓝图类型" width="180">
+                    </el-table-column>
+                    <el-table-column prop="desc" label="蓝图说明">
+                    </el-table-column>
+                    <el-table-column prop="file" label="蓝图下载" width="180">
+                        <template slot-scope="scope">
+                            <a
+                                class="u-down el-button el-button--default el-button--small is-plain"
+                                :href="scope.row.file"
+                                ><i class="el-icon-download"></i>下载</a
+                            >
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
         </div>
 
-        <div class="m-single-prepend">
+        <!-- <div class="m-single-prepend">
             <div class="m-single-excerpt" v-if="post.post_excerpt">
                 <el-divider content-position="left">Excerpt</el-divider>
                 {{ post.post_excerpt }}
             </div>
-        </div>
+        </div> -->
 
         <div class="m-single-post">
             <el-divider content-position="left">JX3BOX</el-divider>
@@ -98,6 +136,10 @@
                 data-full-width-responsive="true"
             ></ins> -->
         </footer>
+
+        <RightSidebar>
+            <list_side />
+        </RightSidebar>
     </div>
 </template>
 
@@ -112,8 +154,7 @@ import {
     resolveImagePath,
 } from "@jx3box/jx3box-common/js/utils.js";
 import User from "@jx3box/jx3box-common/js/user.js";
-import { fn } from "moment";
-import { jx3dat_types } from "@jx3box/jx3box-common/js/types.json";
+import list_side from "@/components/list_side.vue";
 
 export default {
     name: "single",
@@ -127,7 +168,6 @@ export default {
             loading: true,
             url: location.href,
             data: [],
-            typemap: jx3dat_types,
         };
     },
     computed: {
@@ -146,60 +186,19 @@ export default {
                 User.getInfo().group > 60
             );
         },
-        typename: function() {
-            return this.typemap[this.post.post_subtype];
-        },
-        cansee: function() {
-            return (
-                User.getInfo().group >= 64 ||
-                User.getInfo().uid == this.author.uid
-            );
-        },
-        subtype : function(){
-            return this.post.post_subtype || '1'
-        }
-    },
-    methods: {
-        format: function(parent, key) {
-            let val = lodash.get(parent, key);
-            if (Array.isArray(val)) {
-                return val.toString();
-            } else {
-                return val;
-            }
-        },
-        onCopy: function(val) {
-            this.$notify({
-                title: "订阅号复制成功",
-                message: "复制内容 : " + val.text,
-                type: "success",
+        srcList: function() {
+            let arr = [];
+            if (!this.meta.pics || !this.meta.pics.length) return [];
+            this.meta.pics.forEach((val) => {
+                arr.push(val.url);
             });
-        },
-        onError: function() {
-            this.$notify.error({
-                title: "复制失败",
-                message: "请手动复制",
-            });
+            return arr;
         },
     },
+    methods: {},
     filters: {
         dateFormat: function(val) {
             return dateFormat(new Date(val));
-        },
-        highlight: function(item) {
-            const colormap = {
-                newbie: "#49c10f",
-                advanced: "#fba524",
-                recommended: "#cb91ff",
-                geek: "#fc3c3c",
-            };
-            if (item.mark) {
-                return colormap[item.mark[0]];
-            }
-            return "#035cc1";
-        },
-        showDown: function(val) {
-            return val && resolveImagePath(val);
         },
     },
     mounted: function() {
@@ -210,17 +209,19 @@ export default {
                     res.data.data.post.post_meta || {};
                 this.author = this.$store.state.author =
                     res.data.data.author || {};
-                this.data = (this.meta && this.meta.data) || [];
                 this.$store.state.status = true;
 
                 this.loading = false;
             });
         }
     },
+    components: {
+        list_side,
+    },
 };
 </script>
 
 <style lang="less">
 @import "../assets/css/single.less";
-// @import "../assets/css/meta.less";
+@import "../assets/css/house.less";
 </style>

@@ -9,13 +9,13 @@
             >
         </RightSideMsg>
         <div class="m-side-rank">
-            <h3 class="c-sidebar-right-title">
+            <!-- <h3 class="c-sidebar-right-title">
                 <img
                     class="u-icon"
                     svg-inline
                     src="../assets/img/rank.svg"
                 />好评榜
-            </h3>
+            </h3> -->
             <!-- <el-tabs v-model="focus" @tab-click="loadRank">
                 <el-tab-pane
                     :label="name"

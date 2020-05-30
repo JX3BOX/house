@@ -8,14 +8,20 @@
         margin:0;
     }
 
+    .el-col-6{
+        max-width:320px;
+    }
+
     .u-item{
-        
+        .mb(20px);
     }
 
     .u-pic{
         .db;
         .w(100%);
-        .h(180px);
+        .h(auto);
+        max-height:180px;
+        overflow: hidden;
         padding:5px;
         border:1px solid #eee;
         .r(2px);
@@ -46,7 +52,7 @@
         padding:0 5px;
         background-color:rgba(255,255,255,.5);
         .r(2px);
-        color:#402b2b;
+        color:#a55e3d;
     }
 
     .u-pos{
@@ -54,6 +60,7 @@
         .fz(13px,2);
         padding:5px 10px;
         color:#888;
+        .nobreak;
 
         em{
             font-style: normal;
@@ -68,9 +75,9 @@
         .db;
         .x;
         .fz(13px);
-        .bold;
+        // .bold;
         .nobreak;
-        color:@color;
+        color:#555;
         &:hover{
             color:@primary;
         }
@@ -93,4 +100,29 @@
     }
 
     
+}
+// @media screen and (max-width:1680px){
+//     .m-blueprint-list .u-pic{
+//         .h(160px);
+//     }
+// }
+// @media screen and (max-width:1536px){
+//     .m-blueprint-list .u-pic{
+//         .h(140px);
+//     }
+// }
+// @media screen and (max-width:@mininote){
+//     .m-blueprint-list .u-pic{
+//         .h(120px);
+//     }
+// }
+// @media screen and (max-width:@game){
+//     .m-blueprint-list .u-pic{
+//         .h(120px);
+//     }
+// }
+@media screen and (max-width:@phone){
+    .m-blueprint-list .el-col-6{
+        .w(50%);
+    }
 }
