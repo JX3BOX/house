@@ -135,7 +135,7 @@ export default {
         meta: function(item, key) {
             return lodash.get(item["post"]["post_meta"], key);
         },
-        loadPosts: function(i) {
+        loadPosts: function(i,append=false) {
             getPosts(
                 {
                     page: i,
@@ -145,14 +145,26 @@ export default {
                 this
             )
                 .then((res) => {
-                    window.scrollTo(0, 0);
-                    this.data = res.data.data.list;
+                    if(append){
+                        this.data = this.data.concat(res.data.data.list);
+                    }else{
+                        window.scrollTo(0, 0);
+                        this.data = res.data.data.list;
+                    }
                     this.total = res.data.data.total;
                     this.pages = res.data.data.pages;
                 })
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        appendPage: function(i) {
+            this.loading = true;
+            this.loadPosts(i,true)
+        },
+        changePage: function(i) {
+            this.loading = true;
+            this.loadPosts(i)
         },
     },
     mounted: function() {
