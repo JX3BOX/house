@@ -1,0 +1,10 @@
+nIndex	nCatg1Index	nCatg2Index	szName	szImgPath	nImgFrame	szFilepath
+0	0	0	图纸	ui/Image/Homeland/special/blueprint.UITex	0	
+1	9	1	1280平·壹	ui/Image/Homeland/special/blueprint.UITex	0	ui\Scheme\Setting\HomelandBlueprints\全局设计图\S_广陵邑H_001.blueprintx
+2	9	1	1280平·贰	ui/Image/Homeland/special/blueprint.UITex	0	ui\Scheme\Setting\HomelandBlueprints\全局设计图\S_广陵邑V_001.blueprintx
+3	9	1	2240平·壹	ui/Image/Homeland/special/blueprint.UITex	0	ui\Scheme\Setting\HomelandBlueprints\全局设计图\M_广陵邑H_001.blueprintx
+4	9	1	2240平·贰	ui/Image/Homeland/special/blueprint.UITex	0	ui\Scheme\Setting\HomelandBlueprints\全局设计图\M_广陵邑V_001.blueprintx
+5	9	1	4032平·壹	ui/Image/Homeland/special/blueprint.UITex	0	ui\Scheme\Setting\HomelandBlueprints\全局设计图\L_广陵邑H_001.blueprintx
+6	9	1	4032平·贰	ui/Image/Homeland/special/blueprint.UITex	0	ui\Scheme\Setting\HomelandBlueprints\全局设计图\L_广陵邑V_001.blueprintx
+7	9	1	7200平·壹	ui/Image/Homeland/special/blueprint.UITex	0	ui\Scheme\Setting\HomelandBlueprints\全局设计图\H_广陵邑V_001.blueprintx
+8	9	2	转角楼梯	ui/Image/Homeland/special/blueprint.UITex	0	ui\Scheme\Setting\HomelandBlueprints\局部设计图\转角楼梯.blueprint
