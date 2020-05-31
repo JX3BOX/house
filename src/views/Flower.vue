@@ -180,7 +180,7 @@ export default {
             return [];
         },
         isGuest: function() {
-            // return !User.isLogin();  //TODO:
+            return !User.isLogin();
             return false;
         },
         hasNextPage: function() {

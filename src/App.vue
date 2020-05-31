@@ -4,7 +4,7 @@
         <Breadcrumb
             name="结庐在江湖"
             slug="house"
-            root="/"
+            root="/house"
             :publishEnable="true"
             :adminEnable="true"
             :feedbackEnable="true"
