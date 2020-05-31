@@ -71,9 +71,7 @@
             :total="total"
         >
         </el-pagination>
-        <RightSidebar>
-            <list_side />
-        </RightSidebar>
+        
     </div>
 </template>
 
@@ -86,7 +84,7 @@ import {
 } from "@jx3box/jx3box-common/js/utils";
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box.json";
 import lodash from "lodash";
-import list_side from "@/components/list_side.vue";
+
 export default {
     name: "Index",
     props: [],
@@ -171,7 +169,7 @@ export default {
         this.loadPosts(1)
     },
     components: {
-        list_side,
+        
     },
 };
 </script>

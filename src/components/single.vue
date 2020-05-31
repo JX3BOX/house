@@ -137,9 +137,6 @@
             ></ins> -->
         </footer>
 
-        <RightSidebar>
-            <list_side />
-        </RightSidebar>
     </div>
 </template>
 
@@ -154,7 +151,7 @@ import {
     resolveImagePath,
 } from "@jx3box/jx3box-common/js/utils.js";
 import User from "@jx3box/jx3box-common/js/user.js";
-import list_side from "@/components/list_side.vue";
+// import list_side from "@/components/list_side.vue";
 
 export default {
     name: "single",
@@ -216,7 +213,7 @@ export default {
         }
     },
     components: {
-        list_side,
+        // list_side,
     },
 };
 </script>

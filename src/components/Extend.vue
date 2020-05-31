@@ -1,10 +1,11 @@
 <template>
     <div class="m-extend">
-
+        <list_side />
     </div>
 </template>
 
 <script>
+import list_side from '@/components/list_side'
 export default {
     name: "Extend",
     props: [],
@@ -14,6 +15,9 @@ export default {
     computed: {},
     methods: {},
     mounted: function() {},
+    components:{
+        list_side,
+    }
 };
 </script>
 

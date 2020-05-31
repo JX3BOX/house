@@ -2,21 +2,78 @@
     padding:20px;
 }
 
+.m-furniture-type{
+    .el-tabs__header{
+        .mb(0);
+    }
+    .is-active{
+        background-color:@bg-light;
+        border-bottom-color:@bg-light !important;
+    }
+}
+
 .m-furniture-subtype{
-    // border:1px solid #eee;
+    border:1px solid #eee;
+    border-top:none;
     background-color:@bg-light;
+    padding:10px;
     ul{
         .clearfix;
         list-style:none;
+        padding:0;
+        margin:0;
     }
     li{
-        .fl;
-        img{
-            .db;
-            .size(52px);
-        }
-        span{
+        .mr(20px);
+        .mb(10px);
+    }
+    .subctg {
+        li {
+            .fl;
+            div {
+                .size(52px);
+            }
+            .bg-1 {
+                background:url('https://icon.jx3box.com/furniture/homelandbuildingfiltericon.png') no-repeat;
+            }
+            .bg-2 {
+                background:url('https://icon.jx3box.com/furniture/homelandbuildingfiltericon2.png') no-repeat;
+            }
             .x;
+            .sprite-generate(@i:0) when (@i <= 18){
+                .sprite-generatej(@j:0) when (@j <= 8){
+                    .sprite-@{i}-@{j}{
+                        background-position:-52px*(@i) -52px*(@j);
+                    }
+                    .sprite-@{i}-@{j}-important{
+                        background-position:-52px*(@i) -52px*(@j) !important;
+                    }
+                    .sprite-generatej(@j + 1);
+                }
+                @j: 0;
+                .sprite-generatej(0);
+                .sprite-generate(@i + 1);
+            }
+            .sprite-generate(0);
         }
+        li:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.m-furniture-list{
+    .u-img-null{
+        .x;
+        color:#C0C4CC;
+    }
+    .u-img{
+        .x;
+    }
+    .el-table_1_column_1  .cell{
+        .x;
+    }
+    .el-image__error{
+        background:none;
     }
 }

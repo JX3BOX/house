@@ -18,6 +18,9 @@
         <Main :withoutRight="false">
             <list v-if="mode == 'list'" />
             <single v-if="mode == 'single'" />
+            <RightSidebar>
+                <Extend />
+            </RightSidebar>
             <Footer></Footer>
         </Main>
     </div>
@@ -43,13 +46,13 @@ export default {
         },
     },
     methods: {},
-    watch : {
+    watch: {
         $route: {
-            handler : function (newdata){
+            handler: function(newdata) {
                 this.$store.state.subtype = newdata.params.subtype;
             },
             deep: true,
-        }
+        },
     },
     mounted: function() {
         let params = new URLSearchParams(location.search);
@@ -60,7 +63,7 @@ export default {
     components: {
         Info,
         Nav,
-        // Extend,
+        Extend,
         list,
         single,
     },
