@@ -43,3 +43,23 @@
         }
     }
 }
+
+.furniture-indicator {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-image: url(../img/furniture_indicator.png);
+    background-size: 64px 16px;
+    vertical-align: middle;
+
+    &.interactable {
+        background-position: -32px 0px;
+    }
+    &.scaleable {
+        background-position: 0px 0px;
+    }
+    &.chainable {
+        background-position: -48px 0px;
+    }
+}
+

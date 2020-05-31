@@ -61,6 +61,8 @@
                         >{{prop.row.name}}</span>
                     </el-popover>
                     <span v-else>{{prop.row.name}}</span>
+                    <span v-if="prop.row.attr.interactable" class="furniture-indicator interactable"></span>
+                    <span v-if="prop.row.attr.scaleRange.length > 0" class="furniture-indicator scaleable"></span>
                 </template>
             </el-table-column>
             <el-table-column prop="attr.QL" label="品质" width="80"></el-table-column>
@@ -72,15 +74,18 @@
             <el-table-column prop="attr.fun" label="趣味" width="80"></el-table-column>
             <el-table-column prop="attr.price" label="价格" width="80"></el-table-column>
             <el-table-column prop="attr.source" label="获取方式" width="120"></el-table-column>
-            <el-table-column fixed="right" label="操作" width="120">
+            <!-- <el-table-column fixed="right" label="操作" width="120">
                 <template>
                     <el-button type="text" size="small">收藏</el-button>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
         </el-table>
 
         <!-- 收藏列表 -->
-        <RightSidebar>接口：/user/meta key='fav_furniture'，没登录的用localstorage</RightSidebar>
+        <!-- <RightSidebar>接口：/user/meta key='fav_furniture'，没登录的用localstorage</RightSidebar> -->
+        <RightSidebar>
+            
+        </RightSidebar>
     </div>
 </template>
 
