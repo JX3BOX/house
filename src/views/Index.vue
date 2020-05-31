@@ -71,7 +71,6 @@
             :total="total"
         >
         </el-pagination>
-        
     </div>
 </template>
 

@@ -18,7 +18,7 @@
         <Main :withoutRight="false">
             <list v-if="mode == 'list'" />
             <single v-if="mode == 'single'" />
-            <RightSidebar>
+            <RightSidebar v-if="isNotSpecial">
                 <Extend />
             </RightSidebar>
             <Footer></Footer>
@@ -44,6 +44,9 @@ export default {
         mode: function() {
             return this.$store.state.mode;
         },
+        isNotSpecial : function (){
+            return this.$route.name != 'furniture'
+        }
     },
     methods: {},
     watch: {

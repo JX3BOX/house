@@ -11,14 +11,14 @@ import Flower from "../views/Flower.vue";
 Vue.use(VueRouter);
 
 const routes = [
-    { path: '/', component: Index },
-    { path: '/furniture', component: Furniture },
-    { path: '/flower', component: Flower },
+    { name: "index", path: "/", component: Index },
+    { name: "furniture", path: "/furniture", component: Furniture },
+    { name: "flower", path: "/flower", component: Flower },
     // { path: '/blueprint', component: Blueprint },
-]
+];
 
 const router = new VueRouter({
-    routes
+    routes,
 });
 
 export default router;

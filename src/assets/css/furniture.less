@@ -34,10 +34,10 @@
                 .size(52px);
             }
             .bg-1 {
-                background:url('https://icon.jx3box.com/furniture/homelandbuildingfiltericon.png') no-repeat;
+                background:url('@{pic}furniture/homelandbuildingfiltericon.png') no-repeat;
             }
             .bg-2 {
-                background:url('https://icon.jx3box.com/furniture/homelandbuildingfiltericon2.png') no-repeat;
+                background:url('@{pic}furniture/homelandbuildingfiltericon2.png') no-repeat;
             }
             .x;
             .sprite-generate(@i:0) when (@i <= 18){
@@ -76,4 +76,44 @@
     .el-image__error{
         background:none;
     }
+    .u-haspop{
+        .pointer;
+    }
 }
+.furniture-indicator {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-image: url(../img/furniture_indicator.png);
+    background-size: 64px 16px;
+    vertical-align: middle;
+
+    &.interactable {
+        background-position: -32px 0px;
+        .ml(5px);
+    }
+    &.scaleable {
+        background-position: 0px 0px;
+        .ml(5px);
+    }
+    &.chainable {
+        background-position: -48px 0px;
+        .ml(5px);
+    }
+}
+
+.furniture-filter {
+    padding: 12px;
+
+    .note {
+        font-size: 14px;
+        line-height: 24px;
+        height: 24px;
+        padding:10px 0;
+    }
+
+    .el-select{
+        .db;
+    }
+}
+
