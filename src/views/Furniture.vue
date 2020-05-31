@@ -83,8 +83,25 @@
 
         <!-- 收藏列表 -->
         <!-- <RightSidebar>接口：/user/meta key='fav_furniture'，没登录的用localstorage</RightSidebar> -->
-        <RightSidebar>
-            
+        <RightSidebar class="furniture-filter">
+            <div class="note">来源</div>
+            <el-select v-model="source" placeholder="请选择">
+                <el-option
+                    v-for="item in sourceList"
+                    :key="item"
+                    :label="item"
+                    :value="item">
+                </el-option>
+            </el-select>
+            <div class="note">最大家园等级</div>
+            <el-select v-model="maxLevel" placeholder="请选择">
+                <el-option
+                    v-for="level in levels"
+                    :key="level"
+                    :label="level + '级'"
+                    :value="level">
+                </el-option>
+            </el-select>
         </RightSidebar>
     </div>
 </template>
@@ -103,7 +120,35 @@ export default {
             lastSubCtgElmnt: null,
             lastSubCtg: null,
             qualityArr: ["", "白色", "绿色", "蓝色", "紫色", "橙色"],
-            tableMaxHeight: window.innerHeight - 371
+            tableMaxHeight: window.innerHeight - 371,
+            source: '全部',
+            sourceList: [
+                '全部',
+                '园宅币',
+                '活动',
+                '园宅会赛',
+                '隐藏',
+                '生活技能',
+                '声望',
+                '奇遇',
+                '侠义值',
+                '飞沙令',
+                '名剑大会',
+                '战阶',
+                '师徒值',
+                '管家',
+                '宠物游历',
+                '小区',
+                '监本印文',
+                '雀神点数',
+                '江湖贡献值',
+                '入住家园赠送',
+                '商城',
+                '副本',
+                '未知',
+            ],
+            maxLevel: 15,
+            levels: Array.from({ length: 15 }).map((_, i) => i+1 )
         };
     },
     computed: {
@@ -119,7 +164,14 @@ export default {
             if (this.lastSubCtg === null) {
                 return [];
             }
-            return this.lastSubCtg.children;
+            return this.lastSubCtg.children.filter((item) => {
+                let containSource = true;
+                let underLevel = item.attr.levelLimit <= this.maxLevel;
+                if (this.source !== '全部') {
+                    containSource = item.attr.source.indexOf(this.source) >= 0;
+                }
+                return containSource && underLevel;
+            });
         }
     },
     methods: {
