@@ -9,14 +9,37 @@
         .clearfix;
         list-style:none;
     }
-    li{
-        .fl;
-        img{
-            .db;
-            .size(52px);
-        }
-        span{
+    .subctg {
+        li {
+            .fl;
+            div {
+                .size(52px);
+            }
+            .bg-1 {
+                background:url('https://icon.jx3box.com/furniture/homelandbuildingfiltericon.png') no-repeat;
+            }
+            .bg-2 {
+                background:url('https://icon.jx3box.com/furniture/homelandbuildingfiltericon2.png') no-repeat;
+            }
             .x;
+            .sprite-generate(@i:0) when (@i <= 18){
+                .sprite-generatej(@j:0) when (@j <= 8){
+                    .sprite-@{i}-@{j}{
+                        background-position:-52px*(@i) -52px*(@j);
+                    }
+                    .sprite-@{i}-@{j}-important{
+                        background-position:-52px*(@i) -52px*(@j) !important;
+                    }
+                    .sprite-generatej(@j + 1);
+                }
+                @j: 0;
+                .sprite-generatej(0);
+                .sprite-generate(@i + 1);
+            }
+            .sprite-generate(0);
+        }
+        li:hover {
+            cursor: pointer;
         }
     }
 }

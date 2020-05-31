@@ -22,5 +22,5 @@
 </script>
 
 <style lang="less">
-    @import '../assets/css/furniture.less';
+    // @import '../assets/css/furniture.less';
 </style>
