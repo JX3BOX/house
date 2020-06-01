@@ -78,10 +78,20 @@
                     v-for="(item, i) in meta.pics"
                     :key="i"
                 >
-                    <el-image :src="item.url" :preview-src-list="srcList">
-                    </el-image>
+                    <div
+                        class="m-house-pics"
+                        v-if="meta.pics && meta.pics.length"
+                    >
+                        <el-image :src="item.url" class="u-pic" @click="onPreview"></el-image>
+                    </div>
                 </el-carousel-item>
             </el-carousel>
+
+            <el-image-viewer
+                v-if="showViewer"
+                :on-close="closeViewer"
+                :url-list="srcList"
+            />
 
             <div class="m-house-data" v-if="meta.hasData && meta.blueprint">
                 <el-table :data="meta.blueprint" v-if="meta.blueprint.length">
@@ -136,11 +146,11 @@
                 data-full-width-responsive="true"
             ></ins> -->
         </footer>
-
     </div>
 </template>
 
 <script>
+import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 import lodash from "lodash";
 import { getPost } from "../service/post";
 import dateFormat from "../utils/dateFormat";
@@ -165,6 +175,7 @@ export default {
             loading: true,
             url: location.href,
             data: [],
+            showViewer: false,
         };
     },
     computed: {
@@ -192,7 +203,14 @@ export default {
             return arr;
         },
     },
-    methods: {},
+    methods: {
+        onPreview() {
+            this.showViewer = true;
+        },
+        closeViewer() {
+            this.showViewer = false;
+        },
+    },
     filters: {
         dateFormat: function(val) {
             return dateFormat(new Date(val));
@@ -214,6 +232,7 @@ export default {
     },
     components: {
         // list_side,
+        ElImageViewer
     },
 };
 </script>

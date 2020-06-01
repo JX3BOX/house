@@ -170,7 +170,7 @@ export default {
             return [];
         },
         isGuest: function() {
-            return !User.isLogin();
+            // return !User.isLogin();
             return false;
         },
         hasNextPage: function() {
