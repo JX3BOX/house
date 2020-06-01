@@ -17,6 +17,9 @@
 
 .m-flower-search {
     .x;
+    max-width:800px;
+    .auto(x);
+    .w(100%);
 
     .u-server,
     .u-type,
@@ -25,8 +28,26 @@
     }
 }
 
+@media screen and (max-width:@phone){
+    .m-flower-search{
+        .el-col{
+            float:none;
+            .w(100%);
+        }
+        .el-select{
+            .db;
+            .mr(0);
+            .mb(10px);
+        }
+        .u-button{
+            .db;
+            .w(100%);
+        }
+    }
+}
+
 .m-flower-submit {
-    max-width:800px;
+    max-width: 800px;
     .auto(x);
     // .el-button{
     //     .db;

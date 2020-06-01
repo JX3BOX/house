@@ -4,47 +4,66 @@
         <el-divider class="m-flower-desc">精准数据·居家种田好帮手</el-divider>
 
         <div class="m-flower-search">
-            <el-select
-                class="u-server"
-                v-model="server"
-                filterable
-                placeholder="请输入服务器"
-            >
-                <el-option
-                    v-for="item in servers"
-                    :key="item"
-                    :label="item"
-                    :value="item"
-                >
-                </el-option>
-            </el-select>
-            <el-select class="u-type" v-model="type" placeholder="请选择花型">
-                <el-option
-                    v-for="item in types"
-                    :key="item"
-                    :label="item"
-                    :value="item"
-                >
-                </el-option>
-            </el-select>
-            <el-select class="u-level" v-model="level" placeholder="请选择级别">
-                <el-option
-                    v-for="item in levels"
-                    :key="item"
-                    :label="item"
-                    :value="item"
-                >
-                    <span>{{ item }}</span>
-                    <span> · {{ color(item) }}</span>
-                </el-option>
-            </el-select>
-            <el-button
-                type="primary"
-                icon="el-icon-search"
-                :disabled="isGuest"
-                @click="search"
-                >查询</el-button
-            >
+            <el-row>
+                <el-col :span="7">
+                    <el-select
+                        class="u-server"
+                        v-model="server"
+                        filterable
+                        placeholder="请输入服务器"
+                    >
+                        <el-option
+                            v-for="item in servers"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                        >
+                        </el-option>
+                    </el-select>
+                </el-col>
+                <el-col :span="7">
+                    <el-select
+                        class="u-type"
+                        v-model="type"
+                        placeholder="请选择花型"
+                    >
+                        <el-option
+                            v-for="item in types"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                        >
+                        </el-option>
+                    </el-select>
+                </el-col>
+                <el-col :span="7">
+                    <el-select
+                        class="u-level"
+                        v-model="level"
+                        placeholder="请选择级别"
+                    >
+                        <el-option
+                            v-for="item in levels"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                        >
+                            <span>{{ item }}</span>
+                            <span> · {{ color(item) }}</span>
+                        </el-option>
+                    </el-select>
+                </el-col>
+                <el-col :span="3">
+                    <el-button
+                        class="u-button"
+                        type="primary"
+                        icon="el-icon-search"
+                        :disabled="isGuest"
+                        @click="search"
+                        >查询</el-button
+                    >
+                </el-col>
+            </el-row>
         </div>
         <div class="m-flower-submit">
             <el-alert
@@ -108,7 +127,6 @@
             >
             </el-pagination>
         </div>
-
     </div>
 </template>
 
