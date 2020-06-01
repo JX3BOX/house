@@ -4,7 +4,7 @@
             <el-row :gutter="20" v-loading="loading">
                 <el-col :span="6" v-for="(item, i) in data" :key="i"
                     ><div class="u-item">
-                        <a class="u-pic" :href="item.post.ID | postLink"
+                        <a class="u-pic" :href="item.post.ID | postLink" target="_blank"
                             ><i class="u-img"
                                 ><img
                                     :src="meta(item, 'pics') | showHousepic"
@@ -26,7 +26,7 @@
                                     : "未知"
                             }}</em></span
                         >
-                        <a class="u-title" :href="item.post.ID | postLink">
+                        <a class="u-title" :href="item.post.ID | postLink" target="_blank">
                             <span
                                 class="u-blueprint"
                                 v-if="
