@@ -7,8 +7,8 @@
 
         <h5 class="u-title">在线应用</h5>
         <div class="m-nav-group">
-            <router-link to="/furniture"><img svg-inline src="../assets/img/logo.svg" /><span>家具图鉴</span><i class="u-mark isnew">全新上线</i></router-link>
-            <router-link to="/flower"><img svg-inline src="../assets/img/logo.svg" /><span>实时花价</span><i class="u-mark ishot">精准数据</i></router-link>
+            <router-link to="/furniture"><img svg-inline src="../assets/img/app/f2.svg" /><span>家具图鉴</span><i class="u-mark isnew">全新上线</i></router-link>
+            <router-link to="/flower"><img svg-inline src="../assets/img/app/flower.svg" /><span>实时花价</span><i class="u-mark ishot">精准数据</i></router-link>
         </div>
 
     </div>
