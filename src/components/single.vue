@@ -102,7 +102,7 @@
                     <el-table-column prop="file" label="蓝图下载" width="180">
                         <template slot-scope="scope">
                             <a
-                                class="u-down el-button el-button--default el-button--small is-plain"
+                                class="u-down el-button el-button--primary el-button--small is-plain"
                                 :href="scope.row.file"
                                 ><i class="el-icon-download"></i>下载</a
                             >
