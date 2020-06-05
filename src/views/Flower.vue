@@ -74,6 +74,9 @@
                 show-icon
             ></el-alert>
         </div>
+        <div class="m-flower-tip el-alert el-alert--info is-light">
+            前往个人中心<a href="https://v2.jx3box.com/dashboard/#/profile" target="_blank">资料修改</a>可绑定默认区服，否则默认将使用上一次搜索区服
+        </div>
         <div class="m-flower-box">
             <div class="m-flower-result" v-if="data.length">
                 <el-table
@@ -83,7 +86,7 @@
                     <el-table-column prop="server" label="服务器"
                         >{{ server }}
                     </el-table-column>
-                    <el-table-column prop="map" label="地图分线" sortable>
+                    <el-table-column prop="map" label="地图分线">
                     </el-table-column>
                     <el-table-column prop="unit" label="数量" sortable>
                     </el-table-column>
@@ -135,6 +138,9 @@ import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 import User from "@jx3box/jx3box-common/js/user";
 import { getFlowerPrice } from "../service/flower";
 import dateFormat from "../utils/moment";
+import {setServer,getServer} from '../service/server'
+import colormap from '../assets/data/flower_colormap.json'
+
 export default {
     name: "Flower",
     props: [],
@@ -145,33 +151,7 @@ export default {
             types: ["荧光菌", "绣球花", "玫瑰", "郁金香", "百合", "牵牛花"],
             type: "",
             level: "",
-            colormap: {
-                荧光菌: {
-                    一级: "白红黄",
-                    二级: "蓝紫",
-                },
-                绣球花: {
-                    一级: "白红紫",
-                    二级: "粉黄蓝",
-                },
-                玫瑰: {
-                    一级: "粉红橙黄蓝",
-                    二级: "白紫黑",
-                    三级: "绿混",
-                },
-                郁金香: {
-                    一级: "粉红黄",
-                    二级: "白混",
-                },
-                百合: {
-                    一级: "白粉黄",
-                    二级: "橙绿",
-                },
-                牵牛花: {
-                    一级: "红绯紫",
-                    二级: "黄蓝",
-                },
-            },
+            colormap,
             data: [],
             total: 1,
             pages: 1,
@@ -203,21 +183,16 @@ export default {
             return "";
         },
         check: function() {
-            let ready = this.server && this.level && this.type;
-            if (!ready) {
-                this.$alert("请选择搜索条件", "消息", {
-                    confirmButtonText: "确定",
-                    callback: (action) => {},
-                });
-            }
-            return ready;
+            this.server = this.server || '梦江南'
+            this.type = this.type || '荧光菌'
+            this.level = this.level || '一级'
         },
         search: function() {
-            let checked = this.check();
-            if (!checked) return;
+            this.check();
 
             this.page = 1; //复位
             this.loadData(1);
+            setServer(this.server)
         },
         dateFormat: function(row, column) {
             return dateFormat(row.time * 1000);
@@ -259,7 +234,13 @@ export default {
         },
     },
     filters: {},
-    mounted: function() {},
+    mounted: function() {
+        getServer().then((server) => {
+            if(server){
+                this.server = server
+            }
+        })
+    },
     components: {},
 };
 </script>

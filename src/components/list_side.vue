@@ -23,7 +23,7 @@
                 class="m-flower-rec-select"
                 v-model="server"
                 filterable
-                placeholder="梦江南"
+                placeholder="选择服务器"
                 size="small"
                 @change="changeServer"
             >
@@ -35,14 +35,16 @@
                 >
                 </el-option>
             </el-select>
-            <el-table class="m-flower-rec-list" 
-                :data="data"
-            >
+            <el-table class="m-flower-rec-list" :data="data">
                 <el-table-column prop="name" label="品种" sortable width="100">
                 </el-table-column>
                 <el-table-column prop="price" label="价格" sortable width="75">
                 </el-table-column>
-                <el-table-column prop="line" label="分线" width="70"></el-table-column>
+                <el-table-column
+                    prop="line"
+                    label="分线"
+                    width="70"
+                ></el-table-column>
             </el-table>
         </div>
         <div class="m-side-links">
@@ -71,6 +73,8 @@
 import { getHighestPrice } from "../service/flower";
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 import flower_types from "../assets/data/flower_types.json";
+import {setServer,getServer} from '../service/server'
+
 export default {
     name: "list_side",
     props: [],
@@ -103,11 +107,19 @@ export default {
             });
         },
         changeServer() {
+            setServer(this.server)
             this.loadPrice(this.server);
         },
     },
     mounted: function() {
-        this.loadPrice("梦江南");
+        getServer().then((server) => {
+            if(server){
+                this.server = server
+                this.loadPrice(server);
+            }else{
+                this.loadPrice("梦江南");
+            }
+        })
     },
     components: {},
 };
