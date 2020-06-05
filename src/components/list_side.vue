@@ -35,13 +35,15 @@
                 >
                 </el-option>
             </el-select>
-            <ul class="m-flower-rec-list" v-loading="loading">
-                <li v-for="(item, key) in data" :key="key">
-                    <span class="u-name">{{ key }}</span>
-                    <span class="u-price">{{ item.price }}</span>
-                    <span class="u-line">{{ item.line }}</span>
-                </li>
-            </ul>
+            <el-table class="m-flower-rec-list" 
+                :data="data"
+            >
+                <el-table-column prop="name" label="品种" sortable width="100">
+                </el-table-column>
+                <el-table-column prop="price" label="价格" sortable width="75">
+                </el-table-column>
+                <el-table-column prop="line" label="分线" width="70"></el-table-column>
+            </el-table>
         </div>
         <div class="m-side-links">
             <h3 class="c-sidebar-right-title">
@@ -68,6 +70,7 @@
 <script>
 import { getHighestPrice } from "../service/flower";
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
+import flower_types from "../assets/data/flower_types.json";
 export default {
     name: "list_side",
     props: [],
@@ -75,10 +78,10 @@ export default {
         return {
             focus: 0,
             subnav: ["趋势榜", "7日下载榜", "30日下载榜"],
-            data: {},
+            data: [],
             loading: false,
-            server:'',
-            servers
+            server: "",
+            servers,
         };
     },
     computed: {},
@@ -86,13 +89,22 @@ export default {
         loadPrice(server) {
             this.loading = true;
             getHighestPrice(server).then((res) => {
-                this.data = res.data;
+                let data = res.data;
+                let list = [];
+                flower_types.forEach((name) => {
+                    list.push({
+                        name,
+                        line: data[name]["line"],
+                        price: ~~data[name]["price"],
+                    });
+                });
+                this.data = list;
                 this.loading = false;
             });
         },
-        changeServer(){
+        changeServer() {
             this.loadPrice(this.server);
-        }
+        },
     },
     mounted: function() {
         this.loadPrice("梦江南");

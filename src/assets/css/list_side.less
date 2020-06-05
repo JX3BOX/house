@@ -20,23 +20,38 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    .fz(13px,34px);
+
+    td, th{
+        padding:5px 0;
+    }
+
     li {
-        display: block;
+        display: flex;
         height: 34px;
         border-bottom: 1px dotted #eee;
         color:#555;
-        .fz(13px,34px);
         .nobreak;
+    }
+
+    .u-th{
+        .bold;
     }
 
     .u-name {
         .dbi;
-        .w(100px);
+        .w(30%);
+        min-width:120px;
     }
 
     .u-price{
         .dbi;
         .w(60px);
+    }
+
+    .u-line{
+        .x(right);
+        flex:1;
     }
 }
 
