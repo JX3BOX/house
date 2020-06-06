@@ -4,7 +4,7 @@
             <div class="m-single-title">
                 <span class="u-server">{{ meta.server || "未知服" }}</span>
                 <span class="u-map">{{ post.post_subtype || "未知" }}</span>
-                <span class="u-area">{{ meta.area || "未知" }}线</span>
+                <span class="u-area">{{ meta.line || "未知" }}线</span>
                 <span class="u-num">{{ meta.num || "未知" }}号</span>
             </div>
 
