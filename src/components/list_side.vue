@@ -36,9 +36,9 @@
                 </el-option>
             </el-select>
             <el-table class="m-flower-rec-list" :data="data">
-                <el-table-column prop="name" label="品种" sortable width="100">
+                <el-table-column prop="name" label="品种" sortable>
                 </el-table-column>
-                <el-table-column prop="price" label="价格" sortable width="75">
+                <el-table-column prop="price" label="价格" sortable>
                 </el-table-column>
                 <el-table-column
                     prop="line"

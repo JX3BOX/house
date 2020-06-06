@@ -1,6 +1,8 @@
 <template>
     <div class="m-info">
-        街南绿树春饶絮，雪满游春路。树头花艳杂娇云，树底人家朱户。
+        <a href="/house/#/">🌏 增加地图选房</a>
+        <a href="/house/#/flower">🌺 花价增加默认区服绑定</a>
+        <a href="/house/#/furniture">🎹 （即将上线）优化版家具检索</a>
     </div>
 </template>
 <script>
@@ -17,16 +19,5 @@ export default {
 </script>
 
 <style lang="less">
-.m-info {
-    .fl;
-}
-@media screen and (max-width:@ipad){
-    .m-info{
-        // .u-stat{
-            white-space:nowrap;
-            overflow:auto;
-        // }
-        float:none;
-    }
-}
+    @import '../assets/css/info.less';
 </style>

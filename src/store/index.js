@@ -13,9 +13,21 @@ let store = {
         meta : {},
         setting : {},
         author : {},
-        status : false
+        status : false,
+
+        map : '广陵邑',
+        map_visible : false,
     },
     mutations: {
+        switchMap : function (state,payload){
+            state.subtype = state.map = payload
+        },
+        openMap : function (state,payload){
+            state.map_visible = true
+        },
+        closeMap : function (state,payload){
+            state.map_visible = false
+        },
     },
     getters: {
     },

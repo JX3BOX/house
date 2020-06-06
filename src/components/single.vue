@@ -2,12 +2,8 @@
     <div class="m-single-box" v-if="!loading" :loading="loading">
         <header class="m-single-header">
             <div class="m-single-title">
-                <!-- 标题 -->
-                <!-- <a class="u-title u-sub-block" :href="url">{{
-                    post.post_title || '无标题'
-                }}</a> -->
                 <span class="u-server">{{ meta.server || "未知服" }}</span>
-                <span class="u-map">{{ meta.map || "未知" }}</span>
+                <span class="u-map">{{ post.post_subtype || "未知" }}</span>
                 <span class="u-area">{{ meta.area || "未知" }}线</span>
                 <span class="u-num">{{ meta.num || "未知" }}号</span>
             </div>
@@ -20,14 +16,6 @@
                     /></i>
                     <a class="u-name" :href="authorLink">{{ author.name }}</a>
                 </div>
-
-                <!-- tags -->
-                <!-- <div class="u-meta u-sub-block" v-if="post.post_subtype == '1'">
-                    <em class="u-label">标签</em>
-                    <span class="u-value">
-                        {{ format(post.post_meta, "tag") }}
-                    </span>
-                </div> -->
 
                 <!-- 发布日期 -->
                 <span class="u-podate u-sub-block" title="发布日期">
@@ -55,13 +43,8 @@
             <div class="m-single-panel">
                 <!-- 收藏 -->
                 <Fav />
-                <!-- <el-button
-                    size="mini"
-                    type="primary"
-                    disabled
-                    title="即将推出.."
-                    ><i class="el-icon-bell"></i><span>订阅</span></el-button
-                > -->
+                <!-- 点赞 -->
+                <!-- <Like /> -->
             </div>
         </header>
 
@@ -70,7 +53,6 @@
                 class="m-house-pics"
                 :interval="4000"
                 type="card"
-                height="400px"
                 v-if="meta.pics && meta.pics.length"
             >
                 <el-carousel-item
@@ -79,7 +61,7 @@
                     :key="i"
                 >
                     <div
-                        class="m-house-pics"
+                        class="m-house-pic"
                         v-if="meta.pics && meta.pics.length"
                     >
                         <el-image :src="item.url" class="u-pic" @click="onPreview"></el-image>
@@ -93,6 +75,10 @@
                 :url-list="srcList"
             />
 
+            <div class="m-house-action">
+                <Like class="u-like" mode="heart" :count="post.likes" :showCount="true" txt="Like!!"/>
+            </div>
+
             <div class="m-house-data" v-if="meta.hasData && meta.blueprint">
                 <el-table :data="meta.blueprint" v-if="meta.blueprint.length">
                     <el-table-column prop="type" label="蓝图类型" width="180">
@@ -101,23 +87,12 @@
                     </el-table-column>
                     <el-table-column prop="file" label="蓝图下载" width="180">
                         <template slot-scope="scope">
-                            <a
-                                class="u-down el-button el-button--primary el-button--small is-plain"
-                                :href="scope.row.file"
-                                ><i class="el-icon-download"></i>下载</a
-                            >
+                            <Down classes="u-down el-button el-button--primary el-button--small is-plain" :url="scope.row.file" :showCount="true" :count="post.downs"/>
                         </template>
                     </el-table-column>
                 </el-table>
             </div>
         </div>
-
-        <!-- <div class="m-single-prepend">
-            <div class="m-single-excerpt" v-if="post.post_excerpt">
-                <el-divider content-position="left">Excerpt</el-divider>
-                {{ post.post_excerpt }}
-            </div>
-        </div> -->
 
         <div class="m-single-post">
             <el-divider content-position="left">JX3BOX</el-divider>
@@ -161,7 +136,6 @@ import {
     resolveImagePath,
 } from "@jx3box/jx3box-common/js/utils.js";
 import User from "@jx3box/jx3box-common/js/user.js";
-// import list_side from "@/components/list_side.vue";
 
 export default {
     name: "single",
@@ -172,7 +146,7 @@ export default {
             setting: {},
             meta: {},
             author: {},
-            loading: true,
+            loading: false,
             url: location.href,
             data: [],
             showViewer: false,
@@ -218,6 +192,7 @@ export default {
     },
     mounted: function() {
         if (this.$store.state.pid) {
+            this.loading = true
             getPost(this.$store.state.pid, this).then((res) => {
                 this.post = this.$store.state.post = res.data.data.post || {};
                 this.meta = this.$store.state.meta =
@@ -225,13 +200,12 @@ export default {
                 this.author = this.$store.state.author =
                     res.data.data.author || {};
                 this.$store.state.status = true;
-
+            }).finally(() => {
                 this.loading = false;
-            });
+            })
         }
     },
     components: {
-        // list_side,
         ElImageViewer
     },
 };

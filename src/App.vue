@@ -18,6 +18,7 @@
         <Main :withoutRight="false">
             <list v-if="mode == 'list'" />
             <single v-if="mode == 'single'" />
+            <Map />
             <RightSidebar v-if="isNotSpecial">
                 <Extend />
             </RightSidebar>
@@ -32,6 +33,7 @@ import Nav from "@/components/Nav.vue";
 import Extend from "@/components/Extend.vue";
 import list from "@/components/list.vue";
 import single from "@/components/single.vue";
+import Map from '@/components/Map.vue'
 const { getRewrite } = require("@jx3box/jx3box-common/js/utils");
 
 export default {
@@ -69,6 +71,7 @@ export default {
         Extend,
         list,
         single,
+        Map
     },
 };
 </script>
