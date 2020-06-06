@@ -175,7 +175,7 @@ export default {
                 params[this.searchType] = this.search;
             }
             if (this.hasData) {
-                params.meta_3 = true;
+                params.meta_3 = '1';
             }
             if(this.order){
                 params.order = this.order
