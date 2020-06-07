@@ -218,6 +218,7 @@ export default {
             let query = Object.assign(this.params, {
                 page: i,
             });
+            this.loading = true;
             getPosts(query, this)
                 .then((res) => {
                     if (append) {
@@ -234,15 +235,12 @@ export default {
                 });
         },
         appendPage: function(i) {
-            this.loading = true;
             this.loadPosts(i, true);
         },
         changePage: function(i) {
-            this.loading = true;
             this.loadPosts(i);
         },
         commitSearch: function() {
-            this.loading = true;
             this.loadPosts();
         },
         reorder : function (val){
