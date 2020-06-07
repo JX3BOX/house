@@ -5,7 +5,6 @@
             class="m-furniture-type"
             v-model="type"
             type="card"
-            @tab-click="changeType"
         >
             <el-tab-pane label="建筑" name="1"></el-tab-pane>
             <el-tab-pane label="家具" name="2"></el-tab-pane>
@@ -23,7 +22,7 @@
                     @mouseleave="handleLeaveSubCtg($event, subctg)"
                     @click="handleSelectSubCtg($event, subctg)"
                 >
-                    <div :class="setSubCtgClass(subctg)"></div>
+                    <div  v-bind:class="subCtgClass(subctg)"></div>
                     <!-- <img :src="`${imgurl}building/TY/TY_Base_M_pool01_AB200.png`" alt=""> -->
                     <span>{{ subctg.name }}</span>
                 </li>
@@ -35,7 +34,6 @@
             class="m-furniture-list"
             :data="listData"
             style="width: 100%"
-            :cell-style="setCellStyle"
         >
             <el-table-column
                 class="u-img"
@@ -46,11 +44,11 @@
             >
                 <template slot-scope="prop">
                     <el-image
-                        :images="{ url: imgurl + prop.row.attr.img }"
+                        :images="{ url: getUrl(prop.row.attributes.img) }"
                         style="height: 80px"
-                        :src="`${imgurl}${prop.row.attr.img}`"
+                        :src="getUrl(prop.row.attributes.img)"
                         fit="contain"
-                        v-if="prop.row.attr.img"
+                        v-if="prop.row.attributes.img"
                     >
                     </el-image>
                     <div class="u-img-null" v-else>无</div>
@@ -63,85 +61,91 @@
                         width="200"
                         trigger="hover"
                         class="u-haspop"
-                        :content="prop.row.attr.desc"
-                        v-if="prop.row.attr.desc && prop.row.attr.desc !== ''"
+                        :content="prop.row.attributes.desc"
+                        v-if="prop.row.attributes.desc && prop.row.attributes.desc !== ''"
                         :close-delay="20"
                         :open-delay="20"
                     >
                         <span
                             slot="reference"
                             style="border-bottom: 1px solid gray"
-                            >{{ prop.row.name }}</span
+                            class="furniture-name"
+                            :class="`quality-${prop.row.attributes.quality}`"
+                            >{{ prop.row.attributes.name }}</span
                         >
                     </el-popover>
-                    <span v-else>{{ prop.row.name }}</span>
                     <span
-                        v-if="prop.row.attr.interactable"
+                        class="furniture-name"
+                        :class="`quality-${prop.row.attributes.quality}`"
+                        v-else
+                    >{{ prop.row.attributes.name }}</span>
+                    <span
+                        v-if="prop.row.attributes.interact"
                         class="furniture-indicator interactable"
                         title="可交互"
                     ></span>
                     <span
-                        v-if="prop.row.attr.scaleRange.length > 0"
+                        v-if="prop.row.attributes.scaleRange"
                         class="furniture-indicator scaleable"
                         title="可缩放"
                     ></span>
                 </template>
             </el-table-column>
             <el-table-column
-                prop="attr.QL"
+                prop="attributes.level"
                 label="品质"
                 sortable
                 width="80"
             ></el-table-column>
             <el-table-column
-                prop="attr.levelLimit"
+                prop="attributes.limit"
                 label="需求宅邸等级"
                 sortable
                 width="140"
             ></el-table-column>
             <el-table-column
-                prop="attr.ornmnt"
+                prop="attributes.beauty"
                 label="观赏"
                 sortable
                 width="80"
             ></el-table-column>
             <el-table-column
-                prop="attr.usblty"
+                prop="attributes.practicality"
                 label="实用"
                 sortable
                 width="80"
             ></el-table-column>
             <el-table-column
-                prop="attr.firm"
+                prop="attributes.robustness"
                 label="坚固"
                 sortable
                 width="80"
             ></el-table-column>
             <el-table-column
-                prop="attr.luck"
+                prop="attributes.environment"
                 label="风水"
                 sortable
                 width="80"
             ></el-table-column>
             <el-table-column
-                prop="attr.fun"
+                prop="attributes.fun"
                 label="趣味"
                 sortable
                 width="80"
             ></el-table-column>
             <el-table-column
-                prop="attr.price"
+                prop="attributes.price"
                 label="价格"
                 sortable
                 width="80"
             ></el-table-column>
             <el-table-column
-                prop="attr.source"
+                prop="attributes.source"
                 label="获取方式"
             ></el-table-column>
         </el-table>
 
-        <!-- 收藏列表 -->
+        <!-- 筛选面板 -->
         <RightSidebar class="furniture-filter">
             <div class="note">来源</div>
             <el-select v-model="source" placeholder="请选择">
@@ -169,21 +173,22 @@
 
 <script>
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box.json";
-import fdata from "@/assets/data/furniture.json";
+import typedata from "@/assets/data/furniture_types.json";
+import { getFurnitures } from '../service/furniture';
+
 export default {
     name: "Furniture",
     props: [],
     data: function() {
         return {
-            type: "1",
-            lastSubCtgElmnt: null,
-            lastSubCtg: null,
-            fdata: [],
-            qualityArr: ["", "白色", "绿色", "蓝色", "紫色", "橙色"],
+            type: '1', // 默认建筑
+            subCtg: 11000, // 默认水池
+            hover: 0,
+            typeData: [],
+            listData: [],
             // tableMaxHeight: window.innerHeight - 371,
 
             // 图片
-            srcList: [],
             imgurl: __ossMirror + "pic/furniture/",
 
             // 筛选
@@ -217,102 +222,64 @@ export default {
             levels: Array.from({ length: 15 }).map((_, i) => i + 1),
         };
     },
+    watch: {
+        maxLevel() {
+            this.loadData();
+        },
+        source() {
+            this.loadData();
+        }
+    },
     computed: {
         subCtgData() {
-            for (let ctg of fdata) {
-                if (ctg.id == this.type) {
-                    return ctg.children;
-                }
-            }
-            return null;
+            return typedata[this.type] || [];
         },
-        listData() {
-            if (this.lastSubCtg === null) {
-                return [];
+        subCtgClass() {
+            return (subctg) => {
+                const category = +this.type * 10000 + subctg.id * 100;
+                const tmpClass = {
+                    "bg-1": subctg.attr.icon === "homelandbuildingfiltericon.png",
+                    "bg-2": subctg.attr.icon === "homelandbuildingfiltericon2.png",
+                };
+                const type = category === this.subCtg
+                    ? 'checked'
+                    : category === this.hover ? 'hover' : 'normal';
+                const x = subctg.attr[type] % 19;
+                const y = Math.floor(subctg.attr[type] / 19);
+                tmpClass[`sprite-${x}-${y}`] = true;
+                return tmpClass;
             }
-            let _ = this.lastSubCtg.children.filter((item) => {
-                let containSource = true;
-                let underLevel = item.attr.levelLimit <= this.maxLevel;
-                if (this.source !== "全部") {
-                    containSource = item.attr.source.indexOf(this.source) >= 0;
-                }
-                return containSource && underLevel;
-            });
-            // console.log(_);
-            return _;
-        },
+
+        }
     },
     methods: {
-        changeType: function() {},
-        loadTableData() {},
-        setSubCtgClass(subctg) {
-            let tmpClass = {
-                "bg-1": subctg.attr.icon === "homelandbuildingfiltericon.png",
-                "bg-2": subctg.attr.icon === "homelandbuildingfiltericon2.png",
-            };
-            tmpClass[
-                `sprite-${subctg.attr.normal.x}-${subctg.attr.normal.y}`
-            ] = true;
-            return tmpClass;
-        },
         handleHoverSubCtg(e, subctg) {
-            // 调整图标
-            if (e.target == this.lastSubCtgElmnt) {
-                return;
-            }
-            e.target.children[0].classList.add(
-                `sprite-${subctg.attr.hover.x}-${subctg.attr.hover.y}-important`
-            );
+            this.hover = +this.type * 10000 + subctg.id * 100;
         },
         handleLeaveSubCtg(e, subctg) {
             // 调整图标
-            e.target.children[0].classList.remove(
-                `sprite-${subctg.attr.hover.x}-${subctg.attr.hover.y}-important`
-            );
+            this.hover = 0;
         },
         handleSelectSubCtg(e, subctg) {
             // 调整图标
-            if (this.lastSubCtg) {
-                this.lastSubCtgElmnt.children[0].classList.remove(
-                    `sprite-${this.lastSubCtg.attr.checked.x}-${this.lastSubCtg.attr.checked.y}-important`
-                );
-            }
-            e.target.parentElement.children[0].classList.remove(
-                `sprite-${subctg.attr.hover.x}-${subctg.attr.hover.y}-important`
-            );
-            e.target.parentElement.children[0].classList.add(
-                `sprite-${subctg.attr.checked.x}-${subctg.attr.checked.y}-important`
-            );
-            this.lastSubCtg = subctg;
-            this.lastSubCtgElmnt = e.target.parentElement;
+            this.subCtg = +this.type * 10000 + subctg.id * 100;
+            this.loadData();
         },
-        setCellStyle({ row, column, rowIndex, columnIndex }) {
-            if (columnIndex == 1) {
-                let quality = row.attr.quality;
-                let color = "";
-                switch (quality) {
-                    case 2:
-                        color = "#00d24b";
-                        break;
-                    case 3:
-                        color = "#007eff";
-                        break;
-                    case 4:
-                        color = "#ff2dff";
-                        break;
-                    case 5:
-                        color = "#ffa500";
-                        break;
-                    default:
-                        color = "black";
-                        break;
-                }
-                return `color: ${color};`;
-            }
+        loadData() {
+            getFurnitures({
+                category: this.subCtg,
+                source: this.source === '全部' ? undefined : this.source,
+                limit: this.maxLevel,
+            }).then((res) => {
+                this.listData = res.data.data;
+            });
+        },
+        getUrl(rawUrl) {
+            return this.imgurl + rawUrl.replace('home/' ,'');
         },
     },
-    mounted: function() {},
-    components: {
+    mounted: function() {
+        this.loadData();
     },
 };
 </script>
