@@ -40,7 +40,7 @@
                     <el-select
                         class="u-level"
                         v-model="level"
-                        placeholder="请选择级别"
+                        placeholder="全部"
                     >
                         <el-option
                             v-for="item in levels"
@@ -48,8 +48,8 @@
                             :label="item"
                             :value="item"
                         >
-                            <span>{{ item }}</span>
-                            <span> · {{ color(item) }}</span>
+                            <span>{{ item ? item : '全部' }}</span>
+                            <span v-if="item"> · {{ color(item) }}</span>
                         </el-option>
                     </el-select>
                 </el-col>
@@ -75,9 +75,13 @@
             ></el-alert>
         </div>
         <div class="m-flower-tip el-alert el-alert--info is-light">
-            前往个人中心<a href="https://v2.jx3box.com/dashboard/#/profile" target="_blank">资料修改</a>可绑定默认区服，否则默认将使用上一次搜索区服
+            前往个人中心<a
+                href="https://v2.jx3box.com/dashboard/#/profile"
+                target="_blank"
+                >资料修改</a
+            >可绑定默认区服，否则默认将使用上一次搜索区服
         </div>
-        <div class="m-flower-box">
+        <div class="m-flower-box" v-if="mode">
             <div class="m-flower-result" v-if="data.length">
                 <el-table
                     :data="data"
@@ -130,16 +134,41 @@
             >
             </el-pagination>
         </div>
+        <div class="m-flower-overview" v-else>
+            <el-table
+                v-if="overview"
+                :data="overview"
+                :default-sort="{ prop: 'name', order: 'ascending' }"
+            >
+                <el-table-column prop="name" label="品种" width="200px" :formatter="nameFormat">
+                </el-table-column>
+                <el-table-column
+                    prop="map"
+                    label="地图分线"
+                    min-width="300px"
+                    ><template slot-scope="scope">
+                        <span class="u-line" v-for="line in scope.row.map" :key="line">{{line.replace(' ','')}}</span>
+                    </template></el-table-column
+                >
+                <el-table-column
+                    prop="price"
+                    label="当前价格（最高）"
+                    width="160px"
+                >
+                </el-table-column>
+            </el-table>
+        </div>
     </div>
 </template>
 
 <script>
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 import User from "@jx3box/jx3box-common/js/user";
-import { getFlowerPrice } from "../service/flower";
+import { getFlowerPrice, getFlowerPrices } from "../service/flower";
 import dateFormat from "../utils/moment";
-import {setServer,getServer} from '../service/server'
-import colormap from '../assets/data/flower_colormap.json'
+import { setServer, getServer } from "../service/server";
+import colormap from "../assets/data/flower_colormap.json";
+import colors from "../assets/data/flower_colormap2.json";
 
 export default {
     name: "Flower",
@@ -152,20 +181,23 @@ export default {
             type: "",
             level: "",
             colormap,
+            overview: "",
             data: [],
             total: 1,
             pages: 1,
             page: 1,
             loading: false,
             done: false,
+            mode: 1,
         };
     },
     computed: {
         levels: function() {
+            let levels = ['']
             if (this.type) {
-                return Object.keys(this.colormap[this.type]);
+                return levels.concat(Object.keys(this.colormap[this.type]));
             }
-            return [];
+            return levels;
         },
         isGuest: function() {
             // return !User.isLogin();
@@ -183,19 +215,43 @@ export default {
             return "";
         },
         check: function() {
-            this.server = this.server || '梦江南'
-            this.type = this.type || '荧光菌'
-            this.level = this.level || '一级'
+            this.server = this.server || "梦江南";
+            this.type = this.type || "荧光菌";
+            return this.level ? 1 : 0;
         },
         search: function() {
-            this.check();
-
-            this.page = 1; //复位
-            this.loadData(1);
-            setServer(this.server)
+            this.mode = this.check();
+            // 完整模式
+            if (this.mode) {
+                this.page = 1; //复位
+                this.loadData(1);
+                // 简略模式
+            } else {
+                this.loadOverview();
+            }
+            setServer(this.server);
         },
         dateFormat: function(row, column) {
             return dateFormat(row.time * 1000);
+        },
+        nameFormat : function (row, column){
+            return row.name + ' ( ' + colors[row.name] + ' ) '
+        },
+        loadOverview: function() {
+            return getFlowerPrices({
+                server: this.server,
+                flower: this.type,
+            }).then((res) => {
+                let overview = [];
+                for (let name in res.data) {
+                    overview.push({
+                        name: name,
+                        price: res.data[name]["max"] + "园宅币",
+                        map: res.data[name]["maxLine"].slice(0, 5),
+                    });
+                }
+                this.overview = overview;
+            });
         },
         loadData: function(i, append = false) {
             return getFlowerPrice({
@@ -236,10 +292,10 @@ export default {
     filters: {},
     mounted: function() {
         getServer().then((server) => {
-            if(server){
-                this.server = server
+            if (server) {
+                this.server = server;
             }
-        })
+        });
     },
     components: {},
 };
