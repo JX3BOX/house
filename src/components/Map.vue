@@ -2,18 +2,7 @@
     <div class="m-house-map" v-show="visible">
         <div class="m-house-model">
             <div class="u-map">
-                <i class="u-map-1-1"></i>
-                <i class="u-map-1-2"></i>
-                <i class="u-map-1-3"></i>
-                <i class="u-map-1-4"></i>
-                <i class="u-map-2-1"></i>
-                <i class="u-map-2-2"></i>
-                <i class="u-map-2-3"></i>
-                <i class="u-map-2-4"></i>
-                <i class="u-map-3-1"></i>
-                <i class="u-map-3-2"></i>
-                <i class="u-map-3-3"></i>
-                <i class="u-map-3-4"></i>
+                <img class="u-map-bg" :src="mapimg" :alt="currentmap">
             </div>
             <div class="u-house">
                 <el-tooltip
@@ -41,15 +30,14 @@
 </template>
 
 <script>
-import map1houses from "../assets/data/map1.js";
+import housedata from "../assets/data/housedata";
 import Bus from '../store/bus'
+import {__ossMirror} from '@jx3box/jx3box-common/js/jx3box.json'
 export default {
     name: "Map",
     data: function() {
         return {
-            houses: {
-                广陵邑: map1houses,
-            },
+            houses : housedata,
             currentmap: this.map || "广陵邑",
         };
     },
@@ -62,6 +50,9 @@ export default {
         },
         visible : function (){
             return this.$store.state.map_visible
+        },
+        mapimg : function (){
+            return __ossMirror + 'image/map/' + this.currentmap + '.png'
         }
     },
     methods: {
@@ -70,7 +61,7 @@ export default {
         },
         chooseHouse : function (val){
             this.$store.commit('closeMap')
-            this.$router.push({'name':'index'})
+            if(this.$route.name != 'index') this.$router.push({'name':'index'})
             Bus.$emit('chooseHouse',val)
         }
     },
