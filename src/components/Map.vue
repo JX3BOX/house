@@ -61,8 +61,9 @@ export default {
         },
         chooseHouse : function (val){
             this.$store.commit('closeMap')
-            if(this.$route.name != 'index') this.$router.push({'name':'index'})
-            Bus.$emit('chooseHouse',val)
+            if(this.$route.name != 'index') this.$router.push({'name':'index'},function (){
+                Bus.$emit('chooseHouse',val)
+            })
         }
     },
     mounted: function() {},

@@ -48,7 +48,7 @@
                             :label="item"
                             :value="item"
                         >
-                            <span>{{ item ? item : '全部' }}</span>
+                            <span>{{ item ? item : "全部" }}</span>
                             <span v-if="item"> · {{ color(item) }}</span>
                         </el-option>
                     </el-select>
@@ -140,14 +140,21 @@
                 :data="overview"
                 :default-sort="{ prop: 'name', order: 'ascending' }"
             >
-                <el-table-column prop="name" label="品种" width="200px" :formatter="nameFormat">
-                </el-table-column>
                 <el-table-column
-                    prop="map"
-                    label="地图分线"
-                    min-width="300px"
+                    prop="name"
+                    label="品种"
+                    width="200px"
+                    :formatter="nameFormat"
+                >
+                </el-table-column>
+                <el-table-column prop="map" label="地图分线" min-width="300px"
                     ><template slot-scope="scope">
-                        <span class="u-line" v-for="line in scope.row.map" :key="line">{{line.replace(' ','')}}</span>
+                        <span
+                            class="u-line"
+                            v-for="line in scope.row.map"
+                            :key="line"
+                            >{{ line.replace(" ", "") }}</span
+                        >
                     </template></el-table-column
                 >
                 <el-table-column
@@ -177,7 +184,7 @@ export default {
         return {
             servers,
             server: "",
-            types: ["荧光菌", "绣球花", "玫瑰", "郁金香", "百合", "牵牛花"],
+            types: ["绣球花", "郁金香", "牵牛花", "玫瑰", "百合", "荧光菌"],
             type: "",
             level: "",
             colormap,
@@ -193,7 +200,7 @@ export default {
     },
     computed: {
         levels: function() {
-            let levels = ['']
+            let levels = [""];
             if (this.type) {
                 return levels.concat(Object.keys(this.colormap[this.type]));
             }
@@ -216,7 +223,7 @@ export default {
         },
         check: function() {
             this.server = this.server || "梦江南";
-            this.type = this.type || "荧光菌";
+            this.type = this.type || this.types[0];
             return this.level ? 1 : 0;
         },
         search: function() {
@@ -234,8 +241,8 @@ export default {
         dateFormat: function(row, column) {
             return dateFormat(row.time * 1000);
         },
-        nameFormat : function (row, column){
-            return row.name + ' ( ' + colors[row.name] + ' ) '
+        nameFormat: function(row, column) {
+            return row.name + " ( " + colors[row.name] + " ) ";
         },
         loadOverview: function() {
             return getFlowerPrices({
