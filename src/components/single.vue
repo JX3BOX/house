@@ -1,5 +1,5 @@
 <template>
-    <div class="m-single-box" v-if="!loading" :loading="loading">
+    <div class="m-single-box" :loading="loading">
         <header class="m-single-header">
             <div class="m-single-title">
                 <span class="u-server">{{ meta.server || "未知服" }}</span>
@@ -190,10 +190,10 @@ export default {
             return dateFormat(new Date(val));
         },
     },
-    mounted: function() {
-        if (this.$store.state.pid) {
+    created: function() {
+        if (this.id) {
             this.loading = true
-            getPost(this.$store.state.pid, this).then((res) => {
+            getPost(this.id, this).then((res) => {
                 this.post = this.$store.state.post = res.data.data.post || {};
                 this.meta = this.$store.state.meta =
                     res.data.data.post.post_meta || {};

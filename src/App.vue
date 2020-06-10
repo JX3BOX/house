@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" :class="{ 'p-list': mode == 'list', 'p-single': mode == 'single' }">
         <Header></Header>
         <Breadcrumb
             name="结庐在江湖"
@@ -16,8 +16,8 @@
             <Nav />
         </LeftSidebar>
         <Main :withoutRight="false">
-            <list v-if="mode == 'list'" />
             <single v-if="mode == 'single'" />
+            <list v-else />
             <Map />
             <RightSidebar v-if="isNotSpecial">
                 <Extend />
@@ -59,11 +59,11 @@ export default {
             deep: true,
         },
     },
-    mounted: function() {
+    beforeCreate: function() {
         let params = new URLSearchParams(location.search);
         this.$store.state.pid = params.get("pid") || getRewrite("pid");
         this.$store.state.mode = this.$store.state.pid ? "single" : "list";
-        this.$store.state.subtype = getRewrite("subtype");
+        this.$store.state.subtype = this.$route.params.subtype;
     },
     components: {
         Info,
