@@ -5,7 +5,9 @@
             class="m-furniture-type"
             v-model="type"
             type="card"
+            @tab-click="handleTabChange"
         >
+            <el-tab-pane label="全部" name="0"></el-tab-pane>
             <el-tab-pane label="建筑" name="1"></el-tab-pane>
             <el-tab-pane label="家具" name="2"></el-tab-pane>
             <el-tab-pane label="景观" name="3"></el-tab-pane>
@@ -181,8 +183,8 @@ export default {
     props: [],
     data: function() {
         return {
-            type: '1', // 默认建筑
-            subCtg: 11000, // 默认水池
+            type: '0', // 默认全部
+            subCtg: undefined, // 默认全部
             hover: 0,
             typeData: [],
             listData: [],
@@ -259,6 +261,12 @@ export default {
         handleLeaveSubCtg(e, subctg) {
             // 调整图标
             this.hover = 0;
+        },
+        handleTabChange(tab) {
+            if (tab.name === '0') {
+                this.subCtg = undefined;
+                this.loadData();
+            }
         },
         handleSelectSubCtg(e, subctg) {
             // 调整图标
