@@ -1,5 +1,5 @@
 <template>
-    <div class="m-single-box" v-if="!loading" :loading="loading">
+    <div class="m-single-box" :loading="loading">
         <header class="m-single-header">
             <div class="m-single-title">
                 <span class="u-server">{{ meta.server || "未知服" }}</span>
@@ -64,7 +64,11 @@
                         class="m-house-pic"
                         v-if="meta.pics && meta.pics.length"
                     >
-                        <el-image :src="item.url" class="u-pic" @click="onPreview"></el-image>
+                        <el-image
+                            :src="item.url"
+                            class="u-pic"
+                            @click="onPreview"
+                        ></el-image>
                     </div>
                 </el-carousel-item>
             </el-carousel>
@@ -76,7 +80,13 @@
             />
 
             <div class="m-house-action">
-                <Like class="u-like" mode="heart" :count="post.likes" :showCount="true" txt="Like!!"/>
+                <Like
+                    class="u-like"
+                    mode="heart"
+                    :count="post.likes"
+                    :showCount="true"
+                    txt="Like!!"
+                />
             </div>
 
             <div class="m-house-data" v-if="meta.hasData && meta.blueprint">
@@ -87,7 +97,12 @@
                     </el-table-column>
                     <el-table-column prop="file" label="蓝图下载" width="180">
                         <template slot-scope="scope">
-                            <Down classes="u-down el-button el-button--primary el-button--small is-plain" :url="scope.row.file" :showCount="true" :count="post.downs"/>
+                            <Down
+                                classes="u-down el-button el-button--primary el-button--small is-plain"
+                                :url="scope.row.file"
+                                :showCount="true"
+                                :count="post.downs"
+                            />
                         </template>
                     </el-table-column>
                 </el-table>
@@ -190,23 +205,26 @@ export default {
             return dateFormat(new Date(val));
         },
     },
-    mounted: function() {
-        if (this.$store.state.pid) {
-            this.loading = true
-            getPost(this.$store.state.pid, this).then((res) => {
-                this.post = this.$store.state.post = res.data.data.post || {};
-                this.meta = this.$store.state.meta =
-                    res.data.data.post.post_meta || {};
-                this.author = this.$store.state.author =
-                    res.data.data.author || {};
-                this.$store.state.status = true;
-            }).finally(() => {
-                this.loading = false;
-            })
+    created: function() {
+        if (this.id) {
+            this.loading = true;
+            getPost(this.id, this)
+                .then((res) => {
+                    this.post = this.$store.state.post =
+                        res.data.data.post || {};
+                    this.meta = this.$store.state.meta =
+                        res.data.data.post.post_meta || {};
+                    this.author = this.$store.state.author =
+                        res.data.data.author || {};
+                    this.$store.state.status = true;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         }
     },
     components: {
-        ElImageViewer
+        ElImageViewer,
     },
 };
 </script>

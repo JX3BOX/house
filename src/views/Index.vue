@@ -47,7 +47,7 @@
                         <a
                             class="u-item"
                             :href="item.post.ID | postLink"
-                            target="_blank"
+                            :target="target"
                         >
                             <i class="u-pic">
                                 <img
@@ -134,6 +134,7 @@ import {
     publishLink,
     showAvatar,
     resolveImagePath,
+    buildTarget
 } from "@jx3box/jx3box-common/js/utils";
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box.json";
 import lodash from "lodash";
@@ -185,6 +186,9 @@ export default {
         publish_url: function(val) {
             return publishLink('house')
         },
+        target : function (){
+            return buildTarget()
+        }
     },
     filters: {
         authorLink: function(val) {
