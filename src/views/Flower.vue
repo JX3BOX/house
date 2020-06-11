@@ -82,7 +82,7 @@
             >可绑定默认区服，否则默认将使用上一次搜索区服
         </div>
         <div class="m-flower-box" v-if="mode">
-            <div class="m-flower-result" v-if="data.length">
+            <div class="m-flower-result" v-if="data && data.length">
                 <el-table
                     :data="data"
                     :default-sort="{ prop: 'date', order: 'descending' }"
@@ -136,7 +136,7 @@
         </div>
         <div class="m-flower-overview" v-else>
             <el-table
-                v-if="overview"
+                v-if="overview && overview.length"
                 :data="overview"
                 :default-sort="{ prop: 'name', order: 'ascending' }"
             >
