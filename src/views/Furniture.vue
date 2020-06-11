@@ -16,7 +16,7 @@
 
         <!-- 子类型，若干个ul组 -->
         <div class="m-furniture-subtype">
-            <ul class="subctg">
+            <ul class="subctg" v-if="subCtgData.length">
                 <li
                     v-for="subctg of subCtgData"
                     :key="subctg.name"
@@ -24,12 +24,16 @@
                     @mouseleave="handleLeaveSubCtg($event, subctg)"
                     @click="handleSelectSubCtg($event, subctg)"
                 >
-                    <div  v-bind:class="subCtgClass(subctg)"></div>
+                    <div v-bind:class="subCtgClass(subctg)"></div>
                     <!-- <img :src="`${imgurl}building/TY/TY_Base_M_pool01_AB200.png`" alt=""> -->
                     <span>{{ subctg.name }}</span>
                 </li>
             </ul>
+            <p class="u-all" v-else>全部家具</p>
         </div>
+
+        <!-- 固定窗格 -->
+
 
         <!-- 内容列表区 :max-height="tableMaxHeight" -->
         <el-table
@@ -39,7 +43,6 @@
             @sort-change="handleSort"
         >
             <el-table-column
-                class="u-img"
                 fixed
                 prop="icon"
                 label="预览"
@@ -47,11 +50,13 @@
             >
                 <template slot-scope="prop">
                     <el-image
+                        class="u-img"
                         :images="{ url: getUrl(prop.row.attributes.img) }"
                         style="height: 80px"
                         :src="getUrl(prop.row.attributes.img)"
                         fit="contain"
                         v-if="prop.row.attributes.img"
+                        @click="onPreview(prop.row.attributes.img)"
                     >
                     </el-image>
                     <div class="u-img-null" v-else>无</div>
@@ -65,7 +70,10 @@
                         trigger="hover"
                         class="u-haspop"
                         :content="prop.row.attributes.desc"
-                        v-if="prop.row.attributes.desc && prop.row.attributes.desc !== ''"
+                        v-if="
+                            prop.row.attributes.desc &&
+                                prop.row.attributes.desc !== ''
+                        "
                         :close-delay="20"
                         :open-delay="20"
                     >
@@ -81,17 +89,25 @@
                         class="furniture-name"
                         :class="`quality-${prop.row.attributes.quality}`"
                         v-else
-                    >{{ prop.row.attributes.name }}</span>
-                    <span
+                        >{{ prop.row.attributes.name }}</span
+                    >
+
+                    <el-tooltip
+                        effect="dark"
+                        content="可交互"
+                        placement="top"
                         v-if="prop.row.attributes.interact"
-                        class="furniture-indicator interactable"
-                        title="可交互"
-                    ></span>
-                    <span
+                    >
+                        <span class="furniture-indicator interactable"></span>
+                    </el-tooltip>
+                    <el-tooltip
+                        effect="dark"
+                        content="可缩放"
+                        placement="top"
                         v-if="prop.row.attributes.scaleRange"
-                        class="furniture-indicator scaleable"
-                        title="可缩放"
-                    ></span>
+                    >
+                        <span class="furniture-indicator scaleable"></span>
+                    </el-tooltip>
                 </template>
             </el-table-column>
             <el-table-column
@@ -167,6 +183,13 @@
         >
         </el-pagination>
 
+        <!-- 预览器 -->
+        <el-image-viewer
+            v-if="showViewer"
+            :on-close="closeViewer"
+            :url-list="srcList"
+        />
+
         <!-- 筛选面板 -->
         <RightSidebar class="furniture-filter">
             <div class="note">来源</div>
@@ -198,14 +221,15 @@
 <script>
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box.json";
 import typedata from "@/assets/data/furniture_types.json";
-import { getFurnitures } from '../service/furniture';
+import { getFurnitures } from "../service/furniture";
+import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 
 export default {
     name: "Furniture",
     props: [],
     data: function() {
         return {
-            type: '0', // 默认全部
+            type: "0", // 默认全部
             subCtg: undefined, // 默认全部
             hover: 0,
             typeData: [],
@@ -215,6 +239,8 @@ export default {
 
             // 图片
             imgurl: __ossMirror + "pic/furniture/",
+            showViewer: false,
+            srcList : [],
 
             // 筛选
             source: "全部",
@@ -271,21 +297,34 @@ export default {
             return (subctg) => {
                 const category = +this.type * 10000 + subctg.id * 100;
                 const tmpClass = {
-                    "bg-1": subctg.attr.icon === "homelandbuildingfiltericon.png",
-                    "bg-2": subctg.attr.icon === "homelandbuildingfiltericon2.png",
+                    "bg-1":
+                        subctg.attr.icon === "homelandbuildingfiltericon.png",
+                    "bg-2":
+                        subctg.attr.icon === "homelandbuildingfiltericon2.png",
                 };
-                const type = category === this.subCtg
-                    ? 'checked'
-                    : category === this.hover ? 'hover' : 'normal';
+                const type =
+                    category === this.subCtg
+                        ? "checked"
+                        : category === this.hover
+                        ? "hover"
+                        : "normal";
                 const x = subctg.attr[type] % 19;
                 const y = Math.floor(subctg.attr[type] / 19);
                 tmpClass[`sprite-${x}-${y}`] = true;
                 return tmpClass;
-            }
+            };
         },
         hasNextPage() {
             return this.page * this.size < this.total;
-        }
+        },
+        // srcList: function() {
+        //     let arr = [];
+        //     if (!this.meta.pics || !this.meta.pics.length) return [];
+        //     this.meta.pics.forEach((val) => {
+        //         arr.push(val.url);
+        //     });
+        //     return arr;
+        // },
     },
     methods: {
         handleHoverSubCtg(e, subctg) {
@@ -296,7 +335,7 @@ export default {
             this.hover = 0;
         },
         handleTabChange(tab) {
-            if (tab.name === '0') {
+            if (tab.name === "0") {
                 this.subCtg = undefined;
                 this.update();
             }
@@ -309,8 +348,8 @@ export default {
         handleSort({ prop, order }) {
             // 后端排序
             if (order) {
-                this.orderBy = prop.replace('attributes.', '');
-                this.order = order === 'ascending' ? 1 : 0;
+                this.orderBy = prop.replace("attributes.", "");
+                this.order = order === "ascending" ? 1 : 0;
             } else {
                 this.orderBy = undefined;
                 this.order = undefined;
@@ -321,30 +360,32 @@ export default {
             this.loading = true;
             return getFurnitures({
                 category: this.subCtg,
-                source: this.source === '全部' ? undefined : this.source,
+                source: this.source === "全部" ? undefined : this.source,
                 limit: this.maxLevel,
                 order: this.order,
                 orderBy: this.orderBy,
                 size: this.size,
                 page: this.page,
-                interactable: this.interactable === true ? '1' : undefined,
-            }).then((res) => {
-                if (append) {
-                    this.listData.push(...res.data.data);
-                } else {
-                    this.listData = res.data.data;
-                }
-                this.total = res.data.meta.total;
-            }).finally(()=> {
-                this.loading = false;
-            });
+                interactable: this.interactable === true ? "1" : undefined,
+            })
+                .then((res) => {
+                    if (append) {
+                        this.listData.push(...res.data.data);
+                    } else {
+                        this.listData = res.data.data;
+                    }
+                    this.total = res.data.meta.total;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         update() {
             this.page = 1;
             this.loadData();
         },
         getUrl(rawUrl) {
-            return this.imgurl + rawUrl.replace('home/' ,'');
+            return this.imgurl + rawUrl.replace("home/", "");
         },
         appendPage() {
             this.page += 1;
@@ -354,11 +395,21 @@ export default {
             this.loadData().then(() => {
                 window.scrollTo(0, 0);
             });
-        }
+        },
+        onPreview(url) {
+            this.srcList = [url.replace('home',__ossMirror + 'pic/furniture')];
+            this.showViewer = true;
+        },
+        closeViewer() {
+            this.showViewer = false;
+        },
     },
     mounted: function() {
         this.loadData();
     },
+    components : {
+        ElImageViewer,
+    }
 };
 </script>
 
