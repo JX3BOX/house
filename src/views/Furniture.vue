@@ -36,6 +36,7 @@
             class="m-furniture-list"
             :data="listData"
             style="width: 100%"
+            @sort-change="handleSort"
         >
             <el-table-column
                 class="u-img"
@@ -56,7 +57,7 @@
                     <div class="u-img-null" v-else>无</div>
                 </template>
             </el-table-column>
-            <el-table-column prop="name" label="名称" sortable width="200">
+            <el-table-column prop="name" label="名称" width="200">
                 <template slot-scope="prop">
                     <el-popover
                         placement="top-start"
@@ -96,49 +97,49 @@
             <el-table-column
                 prop="attributes.level"
                 label="品质"
-                sortable
+                sortable="custom"
                 width="80"
             ></el-table-column>
             <el-table-column
                 prop="attributes.limit"
                 label="需求宅邸等级"
-                sortable
+                sortable="custom"
                 width="140"
             ></el-table-column>
             <el-table-column
                 prop="attributes.beauty"
                 label="观赏"
-                sortable
+                sortable="custom"
                 width="80"
             ></el-table-column>
             <el-table-column
                 prop="attributes.practicality"
                 label="实用"
-                sortable
+                sortable="custom"
                 width="80"
             ></el-table-column>
             <el-table-column
                 prop="attributes.robustness"
                 label="坚固"
-                sortable
+                sortable="custom"
                 width="80"
             ></el-table-column>
             <el-table-column
                 prop="attributes.environment"
                 label="风水"
-                sortable
+                sortable="custom"
                 width="80"
             ></el-table-column>
             <el-table-column
                 prop="attributes.fun"
                 label="趣味"
-                sortable
+                sortable="custom"
                 width="80"
             ></el-table-column>
             <el-table-column
                 prop="attributes.price"
                 label="价格"
-                sortable
+                sortable="custom"
                 width="80"
             ></el-table-column>
             <el-table-column
@@ -146,6 +147,25 @@
                 label="获取方式"
             ></el-table-column>
         </el-table>
+        <el-button
+            class="m-archive-more"
+            :class="{ show: hasNextPage }"
+            type="primary"
+            :loading="loading"
+            @click="appendPage"
+            >加载更多</el-button
+        >
+        <el-pagination
+            class="m-archive-pages"
+            :page-size="15"
+            background
+            :hide-on-single-page="true"
+            @current-change="changePage"
+            :current-page.sync="page"
+            layout="total, prev, pager, next, jumper"
+            :total="total"
+        >
+        </el-pagination>
 
         <!-- 筛选面板 -->
         <RightSidebar class="furniture-filter">
@@ -188,6 +208,7 @@ export default {
             hover: 0,
             typeData: [],
             listData: [],
+            loading: false,
             // tableMaxHeight: window.innerHeight - 371,
 
             // 图片
@@ -222,13 +243,22 @@ export default {
             ],
             maxLevel: 15,
             levels: Array.from({ length: 15 }).map((_, i) => i + 1),
+
+            // 排序分页
+            orderBy: undefined,
+            order: undefined,
+            page: 1,
+            size: 15,
+            total: 0,
         };
     },
     watch: {
         maxLevel() {
+            this.resetPage();
             this.loadData();
         },
         source() {
+            this.resetPage();
             this.loadData();
         }
     },
@@ -251,7 +281,9 @@ export default {
                 tmpClass[`sprite-${x}-${y}`] = true;
                 return tmpClass;
             }
-
+        },
+        hasNextPage() {
+            return this.page * this.size < this.total;
         }
     },
     methods: {
@@ -265,26 +297,64 @@ export default {
         handleTabChange(tab) {
             if (tab.name === '0') {
                 this.subCtg = undefined;
+                this.resetPage();
                 this.loadData();
             }
         },
         handleSelectSubCtg(e, subctg) {
             // 调整图标
             this.subCtg = +this.type * 10000 + subctg.id * 100;
+            this.resetPage();
             this.loadData();
         },
-        loadData() {
-            getFurnitures({
+        handleSort({ prop, order }) {
+            // 后端排序
+            if (order) {
+                this.orderBy = prop.replace('attributes.', '');
+                this.order = order === 'ascending' ? 1 : 0;
+            } else {
+                this.orderBy = undefined;
+                this.order = undefined;
+            }
+            this.resetPage();
+            this.loadData();
+        },
+        loadData(append = false) {
+            this.loading = true;
+            return getFurnitures({
                 category: this.subCtg,
                 source: this.source === '全部' ? undefined : this.source,
                 limit: this.maxLevel,
+                order: this.order,
+                orderBy: this.orderBy,
+                size: this.size,
+                page: this.page,
             }).then((res) => {
-                this.listData = res.data.data;
+                if (append) {
+                    this.listData.push(...res.data.data);
+                } else {
+                    this.listData = res.data.data;
+                }
+                this.total = res.data.meta.total;
+            }).finally(()=> {
+                this.loading = false;
             });
+        },
+        resetPage() {
+            this.page = 1;
         },
         getUrl(rawUrl) {
             return this.imgurl + rawUrl.replace('home/' ,'');
         },
+        appendPage() {
+            this.page += 1;
+            this.loadData(true);
+        },
+        changePage() {
+            this.loadData().then(() => {
+                window.scrollTo(0, 0);
+            });
+        }
     },
     mounted: function() {
         this.loadData();
