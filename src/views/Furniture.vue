@@ -189,6 +189,8 @@
                 >
                 </el-option>
             </el-select>
+            <div class="note">其他特性</div>
+            <el-checkbox v-model="interactable">可交互</el-checkbox>
         </RightSidebar>
     </div>
 </template>
@@ -243,6 +245,7 @@ export default {
             ],
             maxLevel: 15,
             levels: Array.from({ length: 15 }).map((_, i) => i + 1),
+            interactable: false,
 
             // 排序分页
             orderBy: undefined,
@@ -253,16 +256,14 @@ export default {
         };
     },
     watch: {
-        maxLevel() {
-            this.resetPage();
-            this.loadData();
+        filterableProperties() {
+            this.update();
         },
-        source() {
-            this.resetPage();
-            this.loadData();
-        }
     },
     computed: {
+        filterableProperties() {
+            return `${this.maxLevel},${this.source},${this.interactable}`;
+        },
         subCtgData() {
             return typedata[this.type] || [];
         },
@@ -297,15 +298,13 @@ export default {
         handleTabChange(tab) {
             if (tab.name === '0') {
                 this.subCtg = undefined;
-                this.resetPage();
-                this.loadData();
+                this.update();
             }
         },
         handleSelectSubCtg(e, subctg) {
             // 调整图标
             this.subCtg = +this.type * 10000 + subctg.id * 100;
-            this.resetPage();
-            this.loadData();
+            this.update();
         },
         handleSort({ prop, order }) {
             // 后端排序
@@ -316,8 +315,7 @@ export default {
                 this.orderBy = undefined;
                 this.order = undefined;
             }
-            this.resetPage();
-            this.loadData();
+            this.update();
         },
         loadData(append = false) {
             this.loading = true;
@@ -329,6 +327,7 @@ export default {
                 orderBy: this.orderBy,
                 size: this.size,
                 page: this.page,
+                interactable: this.interactable === true ? '1' : undefined,
             }).then((res) => {
                 if (append) {
                     this.listData.push(...res.data.data);
@@ -340,8 +339,9 @@ export default {
                 this.loading = false;
             });
         },
-        resetPage() {
+        update() {
             this.page = 1;
+            this.loadData();
         },
         getUrl(rawUrl) {
             return this.imgurl + rawUrl.replace('home/' ,'');
