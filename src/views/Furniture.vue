@@ -29,11 +29,14 @@
                     <span>{{ subctg.name }}</span>
                 </li>
             </ul>
-            <p class="u-all" v-else>全部家具</p>
+            <p class="u-all" v-else>
+                <img src="../assets/img/furniture/home.png">
+                <span>全部</span>
+            </p>
         </div>
 
         <!-- 筛选面板 -->
-        <RightSidebar class="furniture-filter">
+        <RightSidebar class="m-furniture-filter">
             <div class="note">来源</div>
             <el-select v-model="source" placeholder="请选择">
                 <el-option
@@ -56,6 +59,18 @@
             </el-select>
             <div class="note">其他特性</div>
             <el-checkbox v-model="interactable">可交互</el-checkbox>
+            <div class="note">名称</div>
+            <el-input v-model="fname" placeholder="搜索名称"></el-input>
+            <div class="note">风水</div>
+            <el-input v-model="environment" placeholder="大于风水值"></el-input>
+            <div class="note">观赏</div>
+            <el-input v-model="beauty" placeholder="大于观赏值"></el-input>
+            <div class="note">坚固</div>
+            <el-input v-model="robustness" placeholder="大于坚固值"></el-input>
+            <div class="note">实用</div>
+            <el-input v-model="practicality" placeholder="大于实用值"></el-input>
+            <div class="note">趣味</div>
+            <el-input v-model="fun" placeholder="大于趣味值"></el-input>
         </RightSidebar>
 
         <!-- 内容列表区 :max-height="tableMaxHeight" -->
@@ -269,6 +284,12 @@ export default {
             maxLevel: 15,
             levels: Array.from({ length: 15 }).map((_, i) => i + 1),
             interactable: false,
+            environment : '',
+            beauty : '',
+            robustness : '',
+            practicality : '',
+            fun : '',
+            fname : '', //家具名称
 
             // 排序分页
             orderBy: undefined,
@@ -285,7 +306,7 @@ export default {
     },
     computed: {
         filterableProperties() {
-            return `${this.maxLevel},${this.source},${this.interactable}`;
+            return `${this.maxLevel},${this.source},${this.interactable},${this.environment},${this.beauty},${this.robustness},${this.practicality},${this.fun},${this.name}`;
         },
         subCtgData() {
             return typedata[this.type] || [];
@@ -314,14 +335,6 @@ export default {
         hasNextPage() {
             return this.page * this.size < this.total;
         },
-        // srcList: function() {
-        //     let arr = [];
-        //     if (!this.meta.pics || !this.meta.pics.length) return [];
-        //     this.meta.pics.forEach((val) => {
-        //         arr.push(val.url);
-        //     });
-        //     return arr;
-        // },
     },
     methods: {
         handleHoverSubCtg(e, subctg) {
@@ -364,6 +377,12 @@ export default {
                 size: this.size,
                 page: this.page,
                 interactable: this.interactable === true ? "1" : undefined,
+                environment : this.environment,
+                beauty : this.beauty,
+                robustness : this.robustness,
+                practicality : this.practicality,
+                fun : this.fun,
+                name : this.fname
             })
                 .then((res) => {
                     if (append) {

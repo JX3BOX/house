@@ -65,7 +65,7 @@
                         v-if="meta.pics && meta.pics.length"
                     >
                         <el-image
-                            :src="item.url"
+                            :src="item.url | showImage"
                             class="u-pic"
                             @click="onPreview"
                         ></el-image>
@@ -151,7 +151,6 @@ import {
     resolveImagePath,
 } from "@jx3box/jx3box-common/js/utils.js";
 import User from "@jx3box/jx3box-common/js/user.js";
-import { fn } from 'moment';
 
 export default {
     name: "single",
@@ -191,7 +190,7 @@ export default {
             let arr = [];
             if (!this.meta.pics || !this.meta.pics.length) return [];
             this.meta.pics.forEach((val) => {
-                arr.push(val.url);
+                arr.push(resolveImagePath(val.url));
             });
             return arr;
         },
@@ -208,6 +207,9 @@ export default {
         dateFormat: function(val) {
             return dateFormat(new Date(val));
         },
+        showImage : function (val){
+            return resolveImagePath(val)
+        }
     },
     created: function() {
         if (this.id) {
