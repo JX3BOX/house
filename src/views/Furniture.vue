@@ -34,7 +34,7 @@
                     <span>{{ subctg.name }}</span>
                 </li>
             </ul>
-            <p class="u-all" v-else>
+            <p class="u-all" v-else @click="handleSelectSubCtg($event, '')">
                 <img src="../assets/img/furniture/home.png" />
                 <span>全部</span>
             </p>
