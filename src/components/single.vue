@@ -80,7 +80,7 @@
             />
 
             <div class="m-house-action">
-                <Like
+                <Like 
                     class="u-like"
                     mode="heart"
                     :count="post.likes"
@@ -151,6 +151,7 @@ import {
     resolveImagePath,
 } from "@jx3box/jx3box-common/js/utils.js";
 import User from "@jx3box/jx3box-common/js/user.js";
+import { fn } from 'moment';
 
 export default {
     name: "single",
@@ -168,6 +169,9 @@ export default {
         };
     },
     computed: {
+        ready : function (){
+            return this.$store.state.status  
+        },
         authorLink: function() {
             return authorLink(this.author.uid);
         },
