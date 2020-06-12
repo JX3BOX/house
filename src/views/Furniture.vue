@@ -29,11 +29,8 @@
                     <span>{{ subctg.name }}</span>
                 </li>
             </ul>
-            <p class="u-all" v-else>全部家具</p>
+            <!-- <p class="u-all" v-else>全部家具</p> -->
         </div>
-
-        <!-- 固定窗格 -->
-
 
         <!-- 内容列表区 :max-height="tableMaxHeight" -->
         <el-table
