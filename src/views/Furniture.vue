@@ -208,7 +208,7 @@
             <div class="note">其他特性</div>
             <el-checkbox v-model="interactable">可交互</el-checkbox>
             <div class="note">名称</div>
-            <el-input v-model="fname" placeholder="搜索名称"></el-input>
+            <el-input v-model="name" placeholder="搜索名称"></el-input>
             <div class="note">风水</div>
             <el-input v-model="environment" placeholder="大于风水值"></el-input>
             <div class="note">观赏</div>
@@ -292,7 +292,7 @@ export default {
             robustness: "",
             practicality: "",
             fun: "",
-            fname: "", //家具名称
+            name: "", //家具名称
             filter_open : false,
 
             // 排序分页
@@ -386,7 +386,7 @@ export default {
                 robustness: this.robustness,
                 practicality: this.practicality,
                 fun: this.fun,
-                name: this.fname,
+                name: this.name,
             })
                 .then((res) => {
                     if (append) {
