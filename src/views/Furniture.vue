@@ -5,6 +5,47 @@
             <span v-else>打开筛选面板</span>
         </el-button>
 
+        <!-- 筛选面板 -->
+        <RightSidebar class="m-furniture-filter" :class="{on:filter_open}">
+            <div class="note">来源</div>
+            <el-select v-model="source" placeholder="请选择">
+                <el-option
+                    v-for="item in sourceList"
+                    :key="item"
+                    :label="item"
+                    :value="item"
+                >
+                </el-option>
+            </el-select>
+            <div class="note">最大家园等级</div>
+            <el-select v-model="maxLevel" placeholder="请选择">
+                <el-option
+                    v-for="level in levels"
+                    :key="level"
+                    :label="level + '级'"
+                    :value="level"
+                >
+                </el-option>
+            </el-select>
+            <div class="note">其他特性</div>
+            <el-checkbox v-model="interactable">可交互</el-checkbox>
+            <div class="note">名称</div>
+            <el-input v-model="name" placeholder="搜索名称"></el-input>
+            <div class="note">风水</div>
+            <el-input v-model="environment" placeholder="大于风水值"></el-input>
+            <div class="note">观赏</div>
+            <el-input v-model="beauty" placeholder="大于观赏值"></el-input>
+            <div class="note">坚固</div>
+            <el-input v-model="robustness" placeholder="大于坚固值"></el-input>
+            <div class="note">实用</div>
+            <el-input
+                v-model="practicality"
+                placeholder="大于实用值"
+            ></el-input>
+            <div class="note">趣味</div>
+            <el-input v-model="fun" placeholder="大于趣味值"></el-input>
+        </RightSidebar>
+
         <!-- 父大类 -->
         <el-tabs
             class="m-furniture-type"
@@ -46,6 +87,7 @@
             :data="listData"
             style="width: 100%"
             @sort-change="handleSort"
+            v-loading="loading"
         >
             <el-table-column fixed prop="icon" label="预览" width="150">
                 <template slot-scope="prop">
@@ -182,47 +224,6 @@
             :total="total"
         >
         </el-pagination>
-
-        <!-- 筛选面板 -->
-        <RightSidebar class="m-furniture-filter" :class="{on:filter_open}">
-            <div class="note">来源</div>
-            <el-select v-model="source" placeholder="请选择">
-                <el-option
-                    v-for="item in sourceList"
-                    :key="item"
-                    :label="item"
-                    :value="item"
-                >
-                </el-option>
-            </el-select>
-            <div class="note">最大家园等级</div>
-            <el-select v-model="maxLevel" placeholder="请选择">
-                <el-option
-                    v-for="level in levels"
-                    :key="level"
-                    :label="level + '级'"
-                    :value="level"
-                >
-                </el-option>
-            </el-select>
-            <div class="note">其他特性</div>
-            <el-checkbox v-model="interactable">可交互</el-checkbox>
-            <div class="note">名称</div>
-            <el-input v-model="name" placeholder="搜索名称"></el-input>
-            <div class="note">风水</div>
-            <el-input v-model="environment" placeholder="大于风水值"></el-input>
-            <div class="note">观赏</div>
-            <el-input v-model="beauty" placeholder="大于观赏值"></el-input>
-            <div class="note">坚固</div>
-            <el-input v-model="robustness" placeholder="大于坚固值"></el-input>
-            <div class="note">实用</div>
-            <el-input
-                v-model="practicality"
-                placeholder="大于实用值"
-            ></el-input>
-            <div class="note">趣味</div>
-            <el-input v-model="fun" placeholder="大于趣味值"></el-input>
-        </RightSidebar>
 
         <!-- 预览器 -->
         <el-image-viewer

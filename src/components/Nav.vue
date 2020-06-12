@@ -17,6 +17,9 @@ export default {
         mode: function() {
             return this.$store.state.mode;
         },
+        isFurniture : function (){
+            return this.$route.name == 'furniture'
+        }
     },
     methods: {},
     mounted: function() {},
