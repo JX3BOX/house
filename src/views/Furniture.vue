@@ -29,8 +29,34 @@
                     <span>{{ subctg.name }}</span>
                 </li>
             </ul>
-            <!-- <p class="u-all" v-else>全部家具</p> -->
+            <p class="u-all" v-else>全部家具</p>
         </div>
+
+        <!-- 筛选面板 -->
+        <RightSidebar class="furniture-filter">
+            <div class="note">来源</div>
+            <el-select v-model="source" placeholder="请选择">
+                <el-option
+                    v-for="item in sourceList"
+                    :key="item"
+                    :label="item"
+                    :value="item"
+                >
+                </el-option>
+            </el-select>
+            <div class="note">最大家园等级</div>
+            <el-select v-model="maxLevel" placeholder="请选择">
+                <el-option
+                    v-for="level in levels"
+                    :key="level"
+                    :label="level + '级'"
+                    :value="level"
+                >
+                </el-option>
+            </el-select>
+            <div class="note">其他特性</div>
+            <el-checkbox v-model="interactable">可交互</el-checkbox>
+        </RightSidebar>
 
         <!-- 内容列表区 :max-height="tableMaxHeight" -->
         <el-table
@@ -186,32 +212,6 @@
             :on-close="closeViewer"
             :url-list="srcList"
         />
-
-        <!-- 筛选面板 -->
-        <RightSidebar class="furniture-filter">
-            <div class="note">来源</div>
-            <el-select v-model="source" placeholder="请选择">
-                <el-option
-                    v-for="item in sourceList"
-                    :key="item"
-                    :label="item"
-                    :value="item"
-                >
-                </el-option>
-            </el-select>
-            <div class="note">最大家园等级</div>
-            <el-select v-model="maxLevel" placeholder="请选择">
-                <el-option
-                    v-for="level in levels"
-                    :key="level"
-                    :label="level + '级'"
-                    :value="level"
-                >
-                </el-option>
-            </el-select>
-            <div class="note">其他特性</div>
-            <el-checkbox v-model="interactable">可交互</el-checkbox>
-        </RightSidebar>
     </div>
 </template>
 

@@ -15,9 +15,7 @@
                     svg-inline
                     src="../assets/img/rank.svg"
                 />最高花价
-                <a href="/house#/flower" class="m-flower-rec-more"
-                    >查看更多<i class="el-icon-d-arrow-right"></i
-                ></a>
+                <router-link class="u-more m-flower-rec-more" to="/flower">查看更多 &raquo;</router-link>
             </h3>
             <el-select
                 class="m-flower-rec-select"

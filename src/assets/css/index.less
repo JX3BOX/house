@@ -110,7 +110,20 @@
         }
     }
 }
-@media screen and (max-width: @notebook) {
+.m-blueprint-list {
+    .el-col {
+        max-width:320px;
+    }
+}
+@media screen and (max-width: 1919px) {
+    .m-blueprint-list {
+        .el-col {
+            .w(33.33%);
+            max-width:none;
+        }
+    }
+}
+@media screen and (max-width: @mininote) {
     .m-blueprint-list {
         .el-col {
             .w(50%);
