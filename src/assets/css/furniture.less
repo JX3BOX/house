@@ -1,46 +1,47 @@
-.m-furniture{
-    padding:20px;
+.m-furniture {
+    padding: 20px;
+    .pr;
 }
 
-.m-furniture-type{
-    .el-tabs__header{
+.m-furniture-type {
+    .el-tabs__header {
         .mb(0);
     }
-    .is-active{
-        background-color:@bg-light;
-        border-bottom-color:@bg-light !important;
+    .is-active {
+        background-color: @bg-light;
+        border-bottom-color: @bg-light !important;
         .bold;
     }
 }
 
-.m-furniture-subtype{
-    border:1px solid #E4E7ED;
-    border-top:none;
-    background-color:@bg-light;
-    padding:10px;
+.m-furniture-subtype {
+    border: 1px solid #e4e7ed;
+    border-top: none;
+    background-color: @bg-light;
+    padding: 10px;
     .clearfix;
 
-    .u-all{
+    .u-all {
         .dbi;
-        margin:0;
-        img{
+        margin: 0;
+        img {
             .size(38px);
         }
-        span{
+        span {
             .db;
             .x;
         }
         // color:#888;
-        padding:10px;
+        padding: 10px;
     }
 
-    ul{
+    ul {
         .clearfix;
-        list-style:none;
-        padding:0;
-        margin:0;
+        list-style: none;
+        padding: 0;
+        margin: 0;
     }
-    li{
+    li {
         .mr(20px);
         .mb(10px);
     }
@@ -51,19 +52,21 @@
                 .size(52px);
             }
             .bg-1 {
-                background:url('@{pic}furniture/homelandbuildingfiltericon.png') no-repeat;
+                background: url("@{pic}furniture/homelandbuildingfiltericon.png")
+                    no-repeat;
             }
             .bg-2 {
-                background:url('@{pic}furniture/homelandbuildingfiltericon2.png') no-repeat;
+                background: url("@{pic}furniture/homelandbuildingfiltericon2.png")
+                    no-repeat;
             }
             .x;
-            .sprite-generate(@i:0) when (@i <= 18){
-                .sprite-generatej(@j:0) when (@j <= 8){
-                    .sprite-@{i}-@{j}{
-                        background-position:-52px*(@i) -52px*(@j);
+            .sprite-generate(@i:0) when (@i <= 18) {
+                .sprite-generatej(@j:0) when (@j <= 8) {
+                    .sprite-@{i}-@{j} {
+                        background-position: -52px * (@i) -52px * (@j);
                     }
-                    .sprite-@{i}-@{j}-important{
-                        background-position:-52px*(@i) -52px*(@j) !important;
+                    .sprite-@{i}-@{j}-important {
+                        background-position: -52px * (@i) -52px * (@j) !important;
                     }
                     .sprite-generatej(@j + 1);
                 }
@@ -79,32 +82,31 @@
     }
 }
 
-.m-furniture-list{
-    .u-img-null{
+.m-furniture-list {
+    .u-img-null {
         .x;
-        color:#C0C4CC;
+        color: #c0c4cc;
     }
-    .u-img{
+    .u-img {
         .x;
         .pointer;
     }
-    .el-table_1_column_1  .cell{
+    .el-table_1_column_1 .cell {
         .x;
     }
-    .el-image__error{
-        background:none;
+    .el-image__error {
+        background: none;
     }
-    .u-haspop{
+    .u-haspop {
         .pointer;
     }
 
     overflow: visible;
-    .el-table__header-wrapper{
+    .el-table__header-wrapper {
         position: sticky;
-        top:112px;
+        top: 112px;
         .z(100);
     }
-
 }
 .furniture-indicator {
     width: 16px;
@@ -130,10 +132,18 @@
 
 .furniture-name {
     color: black;
-    &.quality-2 { color: #00d24b }
-    &.quality-3 { color: #007eff }
-    &.quality-4 { color: #ff2dff }
-    &.quality-5 { color: #ffa500 }
+    &.quality-2 {
+        color: #00d24b;
+    }
+    &.quality-3 {
+        color: #007eff;
+    }
+    &.quality-4 {
+        color: #ff2dff;
+    }
+    &.quality-5 {
+        color: #ffa500;
+    }
 }
 
 .m-furniture-filter {
@@ -143,11 +153,35 @@
         font-size: 14px;
         line-height: 24px;
         height: 24px;
-        padding:10px 0;
+        padding: 10px 0;
     }
 
-    .el-select{
+    .el-select {
         .db;
     }
 }
 
+.m-furniture-filter-switch {
+    .none;
+    // .pa;
+    // .rt(20px);
+    // .z(100);
+    .el-switch__label.is-active{color:@color;}
+    .mb(20px);
+}
+
+@media screen and (max-width: @notebook) {
+    .m-furniture-filter {
+        .pf;
+        .rt(0, 112px);
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        .none;
+
+        &.on {
+            .db;
+        }
+    }
+    .m-furniture-filter-switch {
+        .db;
+    }
+}
