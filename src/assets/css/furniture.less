@@ -25,11 +25,12 @@
         .dbi;
         margin: 0;
         img {
-            .size(38px);
+            .size(36px);
         }
         span {
             .db;
             .x;
+            .mt(2px);
         }
         // color:#888;
         padding: 10px;
@@ -107,8 +108,24 @@
         position: sticky;
         top: 112px;
         .z(100);
+
+        .cell {
+            .fz(12px);
+            // font-weight: normal;
+            color: @darkblue;
+        }
+    }
+
+    .cell {
+        .fz(14px);
+        font-family: Cambria, Cochin, Georgia, Times, "Times New Roman",
+            -apple-system, "Microsoft YaHei", Trebuchet MS, Calibri,
+            BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica,
+            sans-serif;
+        text-rendering: optimizelegibility;
     }
 }
+
 .furniture-indicator {
     width: 16px;
     height: 16px;
@@ -132,23 +149,23 @@
 }
 
 .furniture-name {
-    color: black;
-    border-bottom:none !important;
+    border-bottom: none !important;
+    .bold;
     &.quality-2 {
         color: #00d24b;
-        box-shadow:0 1px 0 #00d24b;
+        // box-shadow: 0 1px 0 #00d24b;
     }
     &.quality-3 {
         color: #007eff;
-        box-shadow:0 1px 0 #007eff;
+        // box-shadow: 0 1px 0 #007eff;
     }
     &.quality-4 {
         color: #ff2dff;
-        box-shadow:0 1px 0 #ff2dff;
+        // box-shadow: 0 1px 0 #ff2dff;
     }
     &.quality-5 {
         color: #ffa500;
-        box-shadow:0 1px 0 #ffa500;
+        // box-shadow: 0 1px 0 #ffa500;
     }
 }
 
@@ -156,7 +173,7 @@
     padding: 12px;
 
     .note {
-        font-size: 14px;
+        font-size: 12px;
         line-height: 24px;
         height: 24px;
         padding: 10px 0;
@@ -167,7 +184,7 @@
     }
 }
 
-// @media screen and (max-width:1900px){
+// @media screen and (max-width:@smallpc){
 //     .m-furniture-filter{
 //         .ps;
 //     }
@@ -176,13 +193,24 @@
 //     }
 // }
 
+.m-furniture-search{
+    .mb(10px);
+}
+
 .m-furniture-filter-switch {
     .none;
     // .pa;
     // .rt(20px);
     // .z(100);
-    .el-switch__label.is-active{color:@color;}
+    .el-switch__label.is-active {
+        color: @color;
+    }
     .mb(20px);
+}
+@media screen and (max-width:@phone){
+    .m-furniture-filter-switch{
+        .none;
+    }
 }
 
 @media screen and (max-width: @smallpc) {

@@ -1,6 +1,15 @@
 <template>
     <div class="m-info">
-        <a href="/house/#/furniture">🎹 家具应用优化（增加顶部窗格固定/大图预览/分页/全局筛选过滤）</a>
+        <div class="m-info-notice">
+            <a class="u-item" href="/house/#/furniture">🎹 家具应用优化</a>
+            <a class="u-item" href="/house/#/flower">🌺 花价应用增加一键复制分线</a>
+        </div>
+
+        <div class="m-info-router">
+            <router-link to="/"><i class="el-icon-collection"></i></router-link>
+            <router-link to="/furniture"><i class="el-icon-table-lamp"></i></router-link>
+            <router-link to="/flower"><i class="el-icon-sell"></i></router-link>
+        </div>
     </div>
 </template>
 <script>

@@ -149,12 +149,22 @@
                 </el-table-column>
                 <el-table-column prop="map" label="地图分线" min-width="300px"
                     ><template slot-scope="scope">
-                        <span
-                            class="u-line"
-                            v-for="line in scope.row.map"
-                            :key="line"
-                            >{{ line.replace(" ", "") }}</span
+                        <el-tooltip
+                            class="u-line-wrapper"
+                            effect="dark"
+                            content="点击复制"
+                            placement="top"
                         >
+                            <span
+                                class="u-line"
+                                v-for="line in scope.row.map"
+                                :key="line"
+                                v-clipboard:copy="onlyLineNumber(line)"
+                                v-clipboard:success="onCopy"
+                                v-clipboard:error="onError"
+                                >{{ line.replace(" ", "") }}</span
+                            >
+                        </el-tooltip>
                     </template></el-table-column
                 >
                 <el-table-column
@@ -294,6 +304,22 @@ export default {
             this.loadData(i).then(() => {
                 window.scrollTo(0, 0);
             });
+        },
+        onCopy: function(val) {
+            this.$notify({
+                title: "订阅号复制成功",
+                message: "复制内容 : " + val.text,
+                type: "success",
+            });
+        },
+        onError: function() {
+            this.$notify.error({
+                title: "复制失败",
+                message: "请手动复制",
+            });
+        },
+        onlyLineNumber: function(val) {
+            return val.replace("线", "");
         },
     },
     filters: {},

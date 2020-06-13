@@ -59,7 +59,7 @@
     .fr;
     .fz(12px);
     color:@darkblue;
-    font-weight:300;
+    font-weight:normal;
     &:hover{
         color:@pink;
     }
@@ -68,4 +68,10 @@
 .m-flower-rec-select{
     .db;
     .mb(5px);
+}
+
+@media screen and (max-width:@phone){
+    .m-side-rank{
+        .none;
+    }
 }

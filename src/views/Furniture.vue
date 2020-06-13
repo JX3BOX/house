@@ -1,14 +1,31 @@
 <template>
     <div class="m-furniture">
-        <el-button icon="el-icon-set-up" type="primary" plain class="m-furniture-filter-switch" @click="toggleFilter">
+        <div class="m-furniture-search">
+            <el-input
+                placeholder="请输入家具名称"
+                v-model="name"
+            >
+                <template slot="prepend">名称</template>
+                <el-button slot="append" icon="el-icon-search"></el-button>
+            </el-input>
+        </div>
+
+        <!-- 筛选面板开关 -->
+        <el-button
+            icon="el-icon-set-up"
+            type="primary"
+            plain
+            class="m-furniture-filter-switch"
+            @click="toggleFilter"
+        >
             <span v-if="filter_open">关闭筛选面板</span>
             <span v-else>打开筛选面板</span>
         </el-button>
 
         <!-- 筛选面板 -->
-        <RightSidebar class="m-furniture-filter" :class="{on:filter_open}">
+        <RightSidebar class="m-furniture-filter" :class="{ on: filter_open }">
             <div class="note">来源</div>
-            <el-select v-model="source" placeholder="请选择">
+            <el-select v-model="source" placeholder="请选择" size="medium">
                 <el-option
                     v-for="item in sourceList"
                     :key="item"
@@ -18,7 +35,7 @@
                 </el-option>
             </el-select>
             <div class="note">最大家园等级</div>
-            <el-select v-model="maxLevel" placeholder="请选择">
+            <el-select v-model="maxLevel" placeholder="请选择" size="medium">
                 <el-option
                     v-for="level in levels"
                     :key="level"
@@ -29,21 +46,36 @@
             </el-select>
             <div class="note">其他特性</div>
             <el-checkbox v-model="interactable">可交互</el-checkbox>
-            <div class="note">名称</div>
-            <el-input v-model="name" placeholder="搜索名称"></el-input>
             <div class="note">风水</div>
-            <el-input v-model="environment" placeholder="大于风水值"></el-input>
+            <el-input
+                v-model="environment"
+                placeholder="大于风水值"
+                size="medium"
+            ></el-input>
             <div class="note">观赏</div>
-            <el-input v-model="beauty" placeholder="大于观赏值"></el-input>
+            <el-input
+                v-model="beauty"
+                placeholder="大于观赏值"
+                size="medium"
+            ></el-input>
             <div class="note">坚固</div>
-            <el-input v-model="robustness" placeholder="大于坚固值"></el-input>
+            <el-input
+                v-model="robustness"
+                placeholder="大于坚固值"
+                size="medium"
+            ></el-input>
             <div class="note">实用</div>
             <el-input
                 v-model="practicality"
                 placeholder="大于实用值"
+                size="medium"
             ></el-input>
             <div class="note">趣味</div>
-            <el-input v-model="fun" placeholder="大于趣味值"></el-input>
+            <el-input
+                v-model="fun"
+                placeholder="大于趣味值"
+                size="medium"
+            ></el-input>
         </RightSidebar>
 
         <!-- 父大类 -->
@@ -294,7 +326,7 @@ export default {
             practicality: "",
             fun: "",
             name: "", //家具名称
-            filter_open : false,
+            filter_open: false,
 
             // 排序分页
             orderBy: undefined,
@@ -424,9 +456,9 @@ export default {
         closeViewer() {
             this.showViewer = false;
         },
-        toggleFilter(){
-            this.filter_open = !this.filter_open
-        }
+        toggleFilter() {
+            this.filter_open = !this.filter_open;
+        },
     },
     mounted: function() {
         this.loadData();
