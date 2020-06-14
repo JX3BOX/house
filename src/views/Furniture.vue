@@ -340,10 +340,17 @@ export default {
         filterableProperties() {
             this.update();
         },
+        name : function (){
+            if(this.name){
+                this.type = '0'
+                this.subCtg = undefined;
+                this.update();
+            }
+        }
     },
     computed: {
         filterableProperties() {
-            return `${this.maxLevel},${this.source},${this.interactable},${this.environment},${this.beauty},${this.robustness},${this.practicality},${this.fun},${this.name}`;
+            return `${this.maxLevel},${this.source},${this.interactable},${this.environment},${this.beauty},${this.robustness},${this.practicality},${this.fun}`;
         },
         subCtgData() {
             return typedata[this.type] || [];
