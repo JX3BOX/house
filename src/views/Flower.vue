@@ -1,5 +1,5 @@
 <template>
-    <div class="m-flower">
+    <div class="m-flower" :loading="loading">
         <h1 class="m-flower-title">全区服小区花价查询</h1>
         <el-divider class="m-flower-desc">精准数据·居家种田好帮手</el-divider>
 
@@ -255,6 +255,7 @@ export default {
             return row.name + " ( " + colors[row.name] + " ) ";
         },
         loadOverview: function() {
+            this.loading = true
             return getFlowerPrices({
                 server: this.server,
                 flower: this.type,
@@ -271,6 +272,7 @@ export default {
             });
         },
         loadData: function(i, append = false) {
+            this.loading = true
             return getFlowerPrice({
                 server: this.server,
                 flower: this.level + this.type,
@@ -307,7 +309,7 @@ export default {
         },
         onCopy: function(val) {
             this.$notify({
-                title: "订阅号复制成功",
+                title: "复制成功",
                 message: "复制内容 : " + val.text,
                 type: "success",
             });
