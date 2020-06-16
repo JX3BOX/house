@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { getHighestPrice } from "../service/flower";
+import { getFlowerRank } from "../service/flower";
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 import flower_types from "../assets/data/flower_types.json";
 import {setServer,getServer} from '../service/server'
@@ -90,7 +90,7 @@ export default {
     methods: {
         loadPrice(server) {
             this.loading = true;
-            getHighestPrice(server).then((res) => {
+            getFlowerRank(server).then((res) => {
                 let data = res.data;
                 let list = [];
                 flower_types.forEach((name) => {

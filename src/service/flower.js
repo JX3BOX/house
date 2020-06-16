@@ -1,42 +1,85 @@
 import { axios, $ } from "../service/axios";
 import { __next } from "@jx3box/jx3box-common/js/jx3box.json";
-
-// 全部价格
-const all = __next + "api/flower/price/query";        //TODO:
-// const all = "/api/flower/price/query";
-
-// 概览
-const kind = __next + 'api/flower/price/rank'    //TODO:
-// const kind = '/api/flower/price/rank'
-
 // 排行榜
-const highest = __next + 'api/flower/price/max-index';   //TODO:
-// const highest = "/api/flower/price/max-index";
+const rank = __next + 'api/flower/price/max-index';   //TODO:
+// const rank = "/api/flower/price/max-index";
 
+// 类型
+const kind = __next + 'api/flower/price/rank'    //TODO:
+// const kind = "/api/flower/price/rank";
 
+// 详情
+const detail = __next + "api/flower/price/query";        //TODO:
+// const detail = "/api/flower/price/query";
 
 // https://github.com/JX3BOX/jx3box-api/blob/master/DOCS/flower-price.md
-function getFlowerPrice(query) {
-    return axios.get(all, {
-        params: query,
-        withCredentials: true,
-    });
+
+function getFlowerRank(server, vm) {
+    return axios
+        .get(rank, {
+            params: {
+                server: server,
+            },
+            withCredentials: true,
+        })
+        .then((res) => {
+            vm.$notify({
+                title: "加载成功",
+                message: "数据加载成功",
+                type: "success",
+            });
+            return res;
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+        .finally(() => {
+            vm.loading = false;
+        });
 }
 
-function getFlowerPrices(query){
-    return axios.get(kind,{
-        params : query,
-        withCredentials: true,
-    })
+function getFlowerPrices(query, vm) {
+    return axios
+        .get(kind, {
+            params: query,
+            withCredentials: true,
+        })
+        .then((res) => {
+            vm.$notify({
+                title: "加载成功",
+                message: "数据加载成功",
+                type: "success",
+            });
+            return res;
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+        .finally(() => {
+            vm.loading = false;
+        });
 }
 
-function getHighestPrice(server) {
-    return axios.get(highest, {
-        params: {
-            server: server,
-        },
-        withCredentials: true,
-    });
+function getFlowerPrice(query, vm) {
+    return axios
+        .get(detail, {
+            params: query,
+            withCredentials: true,
+        })
+        .then((res) => {
+            vm.$notify({
+                title: "加载成功",
+                message: "数据加载成功",
+                type: "success",
+            });
+            return res;
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+        .finally(() => {
+            vm.loading = false;
+        });
 }
 
-export { getFlowerPrice,getFlowerPrices, getHighestPrice };
+export { getFlowerPrice, getFlowerPrices, getFlowerRank };

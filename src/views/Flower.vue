@@ -11,6 +11,7 @@
                         v-model="server"
                         filterable
                         placeholder="请输入服务器"
+                        @change="search"
                     >
                         <el-option
                             v-for="item in servers"
@@ -26,7 +27,9 @@
                         class="u-type"
                         v-model="type"
                         placeholder="请选择花型"
+                        @change="search"
                     >
+                        <el-option label="全部" value=""> </el-option>
                         <el-option
                             v-for="item in types"
                             :key="item"
@@ -40,16 +43,17 @@
                     <el-select
                         class="u-level"
                         v-model="level"
-                        placeholder="全部"
+                        placeholder="请选择等级"
+                        @change="search"
                     >
+                        <el-option label="全部" value=""> </el-option>
                         <el-option
                             v-for="item in levels"
                             :key="item"
                             :label="item"
                             :value="item"
                         >
-                            <span>{{ item ? item : "全部" }}</span>
-                            <span v-if="item"> · {{ color(item) }}</span>
+                            <span v-if="item">{{item}} · {{ color(item) }}</span>
                         </el-option>
                     </el-select>
                 </el-col>
@@ -81,7 +85,22 @@
                 >资料修改</a
             >可绑定默认区服，否则默认将使用上一次搜索区服
         </div>
-        <div class="m-flower-box" v-if="mode">
+        <div class="m-flower-all" v-if="mode == 0">
+            <div class="m-flower-result" v-if="rank">
+                <el-table class="m-flower-rec-list" :data="rank">
+                    <el-table-column prop="name" label="品种" sortable>
+                    </el-table-column>
+                    <el-table-column prop="price" label="价格" sortable>
+                    </el-table-column>
+                    <el-table-column
+                        prop="line"
+                        label="分线"
+                        width="70"
+                    ></el-table-column>
+                </el-table>
+            </div>
+        </div>
+        <div class="m-flower-box" v-if="mode == 2">
             <div class="m-flower-result" v-if="data && data.length">
                 <el-table
                     :data="data"
@@ -134,7 +153,7 @@
             >
             </el-pagination>
         </div>
-        <div class="m-flower-overview" v-else>
+        <div class="m-flower-overview" v-if="mode == 1">
             <el-table
                 v-if="overview && overview.length"
                 :data="overview"
@@ -154,11 +173,11 @@
                             effect="dark"
                             content="点击复制"
                             placement="top"
+                            v-for="line in scope.row.map"
+                            :key="line"
                         >
                             <span
                                 class="u-line"
-                                v-for="line in scope.row.map"
-                                :key="line"
                                 v-clipboard:copy="onlyLineNumber(line)"
                                 v-clipboard:success="onCopy"
                                 v-clipboard:error="onError"
@@ -181,11 +200,16 @@
 <script>
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 import User from "@jx3box/jx3box-common/js/user";
-import { getFlowerPrice, getFlowerPrices } from "../service/flower";
+import {
+    getFlowerPrice,
+    getFlowerPrices,
+    getFlowerRank,
+} from "../service/flower";
 import dateFormat from "../utils/moment";
 import { setServer, getServer } from "../service/server";
 import colormap from "../assets/data/flower_colormap.json";
 import colors from "../assets/data/flower_colormap2.json";
+import flower_types from "../assets/data/flower_types.json";
 
 export default {
     name: "Flower",
@@ -193,11 +217,12 @@ export default {
     data: function() {
         return {
             servers,
-            server: "",
+            server: "梦江南",
             types: ["绣球花", "郁金香", "牵牛花", "玫瑰", "百合", "荧光菌"],
             type: "",
             level: "",
             colormap,
+            rank: "",
             overview: "",
             data: [],
             total: 1,
@@ -205,14 +230,13 @@ export default {
             page: 1,
             loading: false,
             done: false,
-            mode: 1,
         };
     },
     computed: {
         levels: function() {
-            let levels = [""];
+            let levels = [];
             if (this.type) {
-                return levels.concat(Object.keys(this.colormap[this.type]));
+                return Object.keys(this.colormap[this.type]);
             }
             return levels;
         },
@@ -223,6 +247,16 @@ export default {
         hasNextPage: function() {
             return this.total > 1 && this.page < this.pages;
         },
+        mode: function() {
+            if (!this.type && !this.level) {
+                return 0;
+            } else if (this.type && !this.level) {
+                return 1;
+            } else if (this.type && this.level) {
+                return 2;
+            }
+            return 0;
+        },
     },
     methods: {
         color: function(level) {
@@ -231,20 +265,18 @@ export default {
             }
             return "";
         },
-        check: function() {
-            this.server = this.server || "梦江南";
-            this.type = this.type || this.types[0];
-            return this.level ? 1 : 0;
-        },
         search: function() {
-            this.mode = this.check();
-            // 完整模式
-            if (this.mode) {
-                this.page = 1; //复位
-                this.loadData(1);
+            this.page = 1; //复位
+
+            // 概览模式
+            if (this.mode == 0) {
+                this.loadRank();
                 // 简略模式
-            } else {
+            } else if (this.mode == 1) {
                 this.loadOverview();
+                // 完整模式
+            } else {
+                this.loadData(1);
             }
             setServer(this.server);
         },
@@ -254,12 +286,30 @@ export default {
         nameFormat: function(row, column) {
             return row.name + " ( " + colors[row.name] + " ) ";
         },
+        loadRank: function() {
+            this.loading = true;
+            return getFlowerRank(this.server, this).then((res) => {
+                let data = res.data;
+                let list = [];
+                flower_types.forEach((name) => {
+                    list.push({
+                        name,
+                        line: data[name]["line"],
+                        price: ~~data[name]["price"],
+                    });
+                });
+                this.rank = list;
+            });
+        },
         loadOverview: function() {
-            this.loading = true
-            return getFlowerPrices({
-                server: this.server,
-                flower: this.type,
-            }).then((res) => {
+            this.loading = true;
+            return getFlowerPrices(
+                {
+                    server: this.server,
+                    flower: this.type,
+                },
+                this
+            ).then((res) => {
                 let overview = [];
                 for (let name in res.data) {
                     overview.push({
@@ -272,30 +322,23 @@ export default {
             });
         },
         loadData: function(i, append = false) {
-            this.loading = true
-            return getFlowerPrice({
-                server: this.server,
-                flower: this.level + this.type,
-                pageIndex: i,
-            })
-                .then((res) => {
-                    if (append) {
-                        this.data = this.data.concat(res.data.data);
-                    } else {
-                        this.data = res.data.data;
-                    }
-                    this.total = res.data.page.total;
-                    this.pages = res.data.page.pageTotal;
-                })
-                .then(() => {
-                    this.$message({
-                        message: "加载成功",
-                        type: "success",
-                    });
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+            this.loading = true;
+            return getFlowerPrice(
+                {
+                    server: this.server,
+                    flower: this.level + this.type,
+                    pageIndex: i,
+                },
+                this
+            ).then((res) => {
+                if (append) {
+                    this.data = this.data.concat(res.data.data);
+                } else {
+                    this.data = res.data.data;
+                }
+                this.total = res.data.page.total;
+                this.pages = res.data.page.pageTotal;
+            });
         },
         appendPage: function(i) {
             this.loading = true;
