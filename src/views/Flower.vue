@@ -1,5 +1,5 @@
 <template>
-    <div class="m-flower" :loading="loading">
+    <div class="m-flower" v-loading="loading">
         <h1 class="m-flower-title">全区服小区花价查询</h1>
         <el-divider class="m-flower-desc">精准数据·居家种田好帮手</el-divider>
 
