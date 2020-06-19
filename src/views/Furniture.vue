@@ -76,6 +76,12 @@
                 placeholder="大于趣味值"
                 size="medium"
             ></el-input>
+            <el-button
+            class="m-furniture-filter-button"
+            type="primary"
+            @click="toggleFilter"
+        >确定</el-button>
+            
         </RightSidebar>
 
         <!-- 父大类 -->
@@ -121,7 +127,7 @@
             @sort-change="handleSort"
             v-loading="loading"
         >
-            <el-table-column fixed prop="icon" label="预览" width="150">
+            <el-table-column fixed prop="icon" label="预览">
                 <template slot-scope="prop">
                     <el-image
                         class="u-img"
@@ -136,7 +142,7 @@
                     <div class="u-img-null" v-else>无</div>
                 </template>
             </el-table-column>
-            <el-table-column prop="name" label="名称" width="200">
+            <el-table-column prop="name" label="名称">
                 <template slot-scope="prop">
                     <el-popover
                         placement="top-start"
@@ -188,49 +194,41 @@
                 prop="attributes.level"
                 label="品质"
                 sortable="custom"
-                width="80"
             ></el-table-column>
             <el-table-column
                 prop="attributes.limit"
                 label="需求宅邸等级"
                 sortable="custom"
-                width="140"
             ></el-table-column>
             <el-table-column
                 prop="attributes.beauty"
                 label="观赏"
                 sortable="custom"
-                width="80"
             ></el-table-column>
             <el-table-column
                 prop="attributes.practicality"
                 label="实用"
                 sortable="custom"
-                width="80"
             ></el-table-column>
             <el-table-column
                 prop="attributes.robustness"
                 label="坚固"
                 sortable="custom"
-                width="80"
             ></el-table-column>
             <el-table-column
                 prop="attributes.environment"
                 label="风水"
                 sortable="custom"
-                width="80"
             ></el-table-column>
             <el-table-column
                 prop="attributes.fun"
                 label="趣味"
                 sortable="custom"
-                width="80"
             ></el-table-column>
             <el-table-column
                 prop="attributes.price"
                 label="价格"
                 sortable="custom"
-                width="80"
             ></el-table-column>
             <el-table-column
                 prop="attributes.source"
