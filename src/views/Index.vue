@@ -35,8 +35,8 @@
             <div class="u-modes">
                 <span class="u-mode u-update" :class="{on:order=='update'}" icon="el-icon-refresh" size="small" plain @click="reorder('update')"><i class="el-icon-refresh"></i> 最后更新</span>
                 <span class="u-mode u-podate" :class="{on:order=='podate'}" icon="el-icon-sort" size="small" plain @click="reorder('podate')"><i class="el-icon-sort"></i> 最早发布</span>
-                <span class="u-mode u-likes" :class="{on:order=='likes'}" icon="el-icon-star-off" size="small" plain @click="reorder('likes')"><i class="el-icon-star-off"></i> 点赞最多</span>
-                <span class="u-mode u-downs" :class="{on:order=='downs'}" icon="el-icon-download" size="small" plain @click="reorder('downs')"><i class="el-icon-download"></i> 下载最多</span>
+                <!-- <span class="u-mode u-likes" :class="{on:order=='likes'}" icon="el-icon-star-off" size="small" plain @click="reorder('likes')"><i class="el-icon-star-off"></i> 点赞最多</span>
+                <span class="u-mode u-downs" :class="{on:order=='downs'}" icon="el-icon-download" size="small" plain @click="reorder('downs')"><i class="el-icon-download"></i> 下载最多</span> -->
             </div>
         </div>
         <!-- 列表 -->
