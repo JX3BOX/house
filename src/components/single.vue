@@ -64,11 +64,11 @@
                         class="m-house-pic"
                         v-if="meta.pics && meta.pics.length"
                     >
-                        <el-image
+                        <img
+                            v-photoswipe:single
                             :src="item.url | showImage"
                             class="u-pic"
-                            @click="onPreview"
-                        ></el-image>
+                        >
                     </div>
                 </el-carousel-item>
             </el-carousel>
@@ -80,7 +80,7 @@
             />
 
             <div class="m-house-action">
-                <Like 
+                <Like
                     class="u-like"
                     mode="heart"
                     :count="post.likes"
@@ -169,7 +169,7 @@ export default {
     },
     computed: {
         ready : function (){
-            return this.$store.state.status  
+            return this.$store.state.status
         },
         authorLink: function() {
             return authorLink(this.author.uid);
@@ -196,7 +196,7 @@ export default {
         },
     },
     methods: {
-        onPreview() {
+        onPreview(el) {
             this.showViewer = true;
         },
         closeViewer() {
