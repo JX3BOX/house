@@ -2,7 +2,7 @@
     <div id="app" :class="{ 'p-list': mode == 'list', 'p-single': mode == 'single' }">
         <Header></Header>
         <Breadcrumb
-            name="结庐在江湖"
+            name="家园分享"
             slug="house"
             root="/house"
             :publishEnable="true"

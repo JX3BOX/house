@@ -49,35 +49,14 @@
         </header>
 
         <div class="m-single-meta">
-            <el-carousel
-                class="m-house-pics"
-                :interval="4000"
-                type="card"
-                v-if="meta.pics && meta.pics.length"
-            >
-                <el-carousel-item
-                    class="u-item"
-                    v-for="(item, i) in meta.pics"
-                    :key="i"
-                >
-                    <div
-                        class="m-house-pic"
-                        v-if="meta.pics && meta.pics.length"
-                    >
-                        <img
-                            v-photoswipe:single
-                            :src="item.url | showImage"
-                            class="u-pic"
-                        >
-                    </div>
-                </el-carousel-item>
-            </el-carousel>
 
-            <el-image-viewer
+            <house :data="meta.pics" v-if="meta.pics && meta.pics.length" mode="single"/>
+
+            <!-- <el-image-viewer
                 v-if="showViewer"
                 :on-close="closeViewer"
                 :url-list="srcList"
-            />
+            /> -->
 
             <div class="m-house-action">
                 <Like
@@ -91,11 +70,11 @@
 
             <div class="m-house-data" v-if="meta.hasData && meta.blueprint">
                 <el-table :data="meta.blueprint" v-if="meta.blueprint.length">
-                    <el-table-column prop="type" label="蓝图类型" width="180">
+                    <el-table-column prop="type" label="蓝图类型">
                     </el-table-column>
                     <el-table-column prop="desc" label="蓝图说明">
                     </el-table-column>
-                    <el-table-column prop="file" label="蓝图下载" width="180">
+                    <el-table-column prop="file" label="蓝图下载">
                         <template slot-scope="scope">
                             <Down
                                 classes="u-down el-button el-button--primary el-button--small is-plain"
@@ -140,7 +119,8 @@
 </template>
 
 <script>
-import ElImageViewer from "element-ui/packages/image/src/image-viewer";
+// import ElImageViewer from "element-ui/packages/image/src/image-viewer";
+import house from '@/components/house'
 import lodash from "lodash";
 import { getPost } from "../service/post";
 import dateFormat from "../utils/dateFormat";
@@ -168,8 +148,8 @@ export default {
         };
     },
     computed: {
-        ready : function (){
-            return this.$store.state.status
+        ready: function() {
+            return this.$store.state.status;
         },
         authorLink: function() {
             return authorLink(this.author.uid);
@@ -207,9 +187,6 @@ export default {
         dateFormat: function(val) {
             return dateFormat(new Date(val));
         },
-        showImage : function (val){
-            return resolveImagePath(val)
-        }
     },
     created: function() {
         if (this.id) {
@@ -230,7 +207,8 @@ export default {
         }
     },
     components: {
-        ElImageViewer,
+        // ElImageViewer,
+        house
     },
 };
 </script>

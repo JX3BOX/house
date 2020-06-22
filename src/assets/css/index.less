@@ -2,6 +2,7 @@
     padding: 20px;
 }
 .m-blueprint-list {
+    .mt(20px);
     ul,
     li {
         list-style: none;
@@ -16,6 +17,7 @@
 
     .u-item {
         .db;
+        .pointer;
     }
 
     .u-pic {
@@ -112,7 +114,31 @@
 }
 .m-blueprint-list {
     .el-col {
-        max-width:340px;
+        // max-width:340px;
+    }
+}
+@media screen and (max-width: 3840px) {
+    .m-blueprint-list {
+        .el-col {
+            .w(12.5%);
+            max-width:none;
+        }
+    }
+}
+@media screen and (max-width: 2560px) {
+    .m-blueprint-list {
+        .el-col {
+            .w(20%);
+            max-width:none;
+        }
+    }
+}
+@media screen and (max-width: 1920px) {
+    .m-blueprint-list {
+        .el-col {
+            .w(25%);
+            max-width:none;
+        }
     }
 }
 @media screen and (max-width: 1919px) {
@@ -158,4 +184,51 @@
         }
     }
     
+}
+
+
+.m-archive-preview{
+    position: fixed !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    margin: 0;
+    // z-index: 800 !important;
+
+    .el-drawer{
+        background-color:#333;
+        .h(60%) !important;
+        min-height:500px;
+    }
+
+    .u-btn{
+        .db;
+        .auto(x);
+        .w(200px);
+    }
+
+    .u-details{
+        .x;
+        color:#ccc;
+        span{
+            padding:0 10px;
+        }
+        em{
+            font-style:normal;
+            &:after{
+                content:":";
+                padding:0 5px;
+                color:#aaa;
+            }
+        }
+        b{
+            color:#eee;
+        }
+    }
+}
+
+.pswp{
+    .z(3000) !important;
 }
