@@ -235,7 +235,7 @@
                 <span class="u-level"><em>等级</em><b>{{ focus.post_meta.level || "未知" }}级</b></span>
             </p>
 
-            <a v-if="focus" :href="focus.ID | postLink" :target="target" class="u-btn el-button el-button--primary" @click="skip">查看详情</a>
+            <a v-if="focus" :href="focus.ID | postLink" :target="target" class="u-btn el-button el-button--primary" @click="skip"><i class="el-icon-copy-document"></i>查看详情</a>
         </el-drawer>
     </div>
 </template>

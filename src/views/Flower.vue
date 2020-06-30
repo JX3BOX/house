@@ -376,6 +376,9 @@ export default {
         });
     },
     components: {},
+    beforeCreate:function (){
+        location.href = 'https://www.jx3box.com/app/flower'
+    }
 };
 </script>
 

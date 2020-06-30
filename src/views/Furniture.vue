@@ -471,6 +471,9 @@ export default {
     components: {
         ElImageViewer,
     },
+    beforeCreate:function (){
+        location.href = 'https://www.jx3box.com/app/furniture'
+    }
 };
 </script>
 

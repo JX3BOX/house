@@ -1,14 +1,13 @@
 <template>
     <div class="m-info">
         <div class="m-info-notice">
-            <a class="u-item" href="/house/#/furniture">🎹 家具应用优化</a>
-            <a class="u-item" href="/house/#/flower">🌺 花价应用增加一键复制分线</a>
+            <span class="u-item" >🎹 新增预览模式</span>
         </div>
 
         <div class="m-info-router">
             <router-link to="/"><i class="el-icon-collection"></i></router-link>
-            <router-link to="/furniture"><i class="el-icon-table-lamp"></i></router-link>
-            <router-link to="/flower"><i class="el-icon-sell"></i></router-link>
+            <a href="/app/furniture" target="_blank"><i class="el-icon-table-lamp"></i></a>
+            <a href="/app/flower" target="_blank"><i class="el-icon-sell"></i></a>
         </div>
     </div>
 </template>
