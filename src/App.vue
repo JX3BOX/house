@@ -12,20 +12,24 @@
             <img slot="logo" svg-inline src="./assets/img/house.svg" />
             <Info />
         </Breadcrumb>
+        <template v-if="mode == 'single'">
         <div class="m-fullscreen-wrapper">
-            <single v-if="mode == 'single'" />
-            <list v-else />
+            <single  />
             <Footer></Footer>
         </div>
-        <!-- <LeftSidebar>
+        </template>
+        <template v-else>
+        <LeftSidebar>
             <Nav />
             <Map />
         </LeftSidebar>
         <Main :withoutRight="true">
-            <RightSidebar v-if="isNotSpecial">
+            <list />
+            <!-- <RightSidebar v-if="isNotSpecial">
                 <Extend />
-            </RightSidebar>
-        </Main> -->
+            </RightSidebar> -->
+        </Main>
+        </template>
     </div>
 </template>
 
@@ -69,11 +73,11 @@ export default {
     },
     components: {
         Info,
-        // Nav,
+        Nav,
         // Extend,
         list,
         single,
-        // Map
+        Map
     },
 };
 </script>
