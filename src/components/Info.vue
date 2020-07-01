@@ -1,7 +1,9 @@
 <template>
     <div class="m-info">
         <div class="m-info-notice">
-            <span class="u-item" >🎹 新增预览模式</span>
+            <a class="u-item" href="/app/furniture" target="_blank">🎹 家具大全</a>
+            <a class="u-item" href="/app/flower" target="_blank">🌺 实时花价</a>
+            <a class="u-item" href="https://jq.qq.com/?_wv=1027&k=InbtJGcw" target="_blank">⚽️ PV邑党</a>
         </div>
 
         <div class="m-info-router">

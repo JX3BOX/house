@@ -1,7 +1,7 @@
 <template>
     <div class="m-single-box" :loading="loading">
         <header class="m-single-header">
-            <div class="m-single-title">
+            <div class="m-single-coord">
                 <span class="u-server">{{ meta.server || "未知服" }}</span>
                 <span class="u-map">{{ post.post_subtype || "未知" }}</span>
                 <span class="u-area">{{ meta.line || "未知" }}线</span>
@@ -33,6 +33,12 @@
                     <time>{{ post.post_modified | dateFormat }}</time>
                 </span>
 
+                <!-- 查看次数 -->
+                <span class="u-views u-sub-block">
+                    <i class="el-icon-view"></i>
+                    {{ setting.views }}
+                </span>
+
                 <!-- 编辑 -->
                 <a class="u-edit u-sub-block" :href="editLink" v-if="showEdit">
                     <i class="u-icon-edit el-icon-edit-outline"></i>
@@ -49,8 +55,19 @@
         </header>
 
         <div class="m-single-meta">
-
-            <house :data="meta.pics" v-if="meta.pics && meta.pics.length" mode="single"/>
+            <div class="m-single-showbox">
+                <div class="m-single-title">
+                    {{ post.post_title || "无名居" }}
+                </div>
+                <div class="m-single-excerpt">
+                    {{ post.post_excerpt || '无名游于天地间。'}}
+                </div>
+                <house class="m-single-pics"
+                    :data="meta.pics"
+                    v-if="meta.pics && meta.pics.length"
+                    mode="single"
+                />
+            </div>
 
             <!-- <el-image-viewer
                 v-if="showViewer"
@@ -120,7 +137,7 @@
 
 <script>
 // import ElImageViewer from "element-ui/packages/image/src/image-viewer";
-import house from '@/components/house'
+import house from "@/components/house";
 import lodash from "lodash";
 import { getPost } from "../service/post";
 import dateFormat from "../utils/dateFormat";
@@ -131,6 +148,7 @@ import {
     resolveImagePath,
 } from "@jx3box/jx3box-common/js/utils.js";
 import User from "@jx3box/jx3box-common/js/user.js";
+import { getStat, postStat } from "../service/stat.js";
 
 export default {
     name: "single",
@@ -204,11 +222,16 @@ export default {
                 .finally(() => {
                     this.loading = false;
                 });
+
+            getStat(this.id).then((data) => {
+                if (data) this.setting = this.$store.state.setting = data;
+            });
+            postStat(this.id);
         }
     },
     components: {
         // ElImageViewer,
-        house
+        house,
     },
 };
 </script>

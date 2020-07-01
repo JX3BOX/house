@@ -34,7 +34,7 @@
             <a
                 :href="publish_url"
                 class="u-publish el-button el-button--primary el-button--small"
-                >+ 发布房屋/蓝图</a
+                >+ 发布房屋蓝图</a
             >
 
             <!-- meta过滤 -->
@@ -130,7 +130,7 @@
         <!-- 列表 -->
         <div class="m-blueprint-list" v-if="data.length">
             <el-row :gutter="20" v-loading="loading">
-                <el-col :span="6" v-for="(item, i) in data" :key="i">
+                <el-col :span="4" v-for="(item, i) in data" :key="i">
                     <el-card class="u-card">
                         <div class="u-item" @click=preview(item) title="点击快速预览">
                             <i class="u-pic">
@@ -235,7 +235,7 @@
                 <span class="u-level"><em>等级</em><b>{{ focus.post_meta.level || "未知" }}级</b></span>
             </p>
 
-            <a v-if="focus" :href="focus.ID | postLink" :target="target" class="u-btn el-button el-button--primary" @click="skip"><i class="el-icon-copy-document"></i>查看详情</a>
+            <a v-if="focus" :href="focus.ID | postLink" :target="target" class="u-btn el-button el-button--primary" @click="skip"><i class="el-icon-copy-document"></i> 查看详情</a>
         </el-drawer>
     </div>
 </template>
@@ -265,7 +265,7 @@ export default {
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数
-            per: 16, //每页条目
+            per: 50, //每页条目
             order: "", //排序模式
 
             search: "", //搜索

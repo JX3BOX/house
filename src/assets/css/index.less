@@ -112,28 +112,21 @@
         }
     }
 }
-.m-blueprint-list {
-    .el-col {
-        // max-width:340px;
-    }
-}
-@media screen and (max-width: 3840px) {
+@media screen and (min-width: 1921px) {
     .m-blueprint-list {
         .el-col {
-            .w(12.5%);
-            max-width:none;
-        }
-    }
-}
-@media screen and (max-width: 2560px) {
-    .m-blueprint-list {
-        .el-col {
-            .w(20%);
-            max-width:none;
+            max-width:360px;
         }
     }
 }
 @media screen and (max-width: 1920px) {
+    .m-blueprint-list {
+        .el-col {
+            .w(20%);
+        }
+    }
+}
+@media screen and (max-width: 1919px) {
     .m-blueprint-list {
         .el-col {
             .w(25%);
@@ -141,15 +134,14 @@
         }
     }
 }
-@media screen and (max-width: 1919px) {
+@media screen and (max-width: @mininote) {
     .m-blueprint-list {
         .el-col {
-            .w(33.33%);
-            max-width:none;
+            .w(33.3333%);
         }
     }
 }
-@media screen and (max-width: @mininote) {
+@media screen and (max-width: @ipad) {
     .m-blueprint-list {
         .el-col {
             .w(50%);
