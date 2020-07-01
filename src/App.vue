@@ -1,5 +1,8 @@
 <template>
-    <div id="app" :class="{ 'p-list': mode == 'list', 'p-single': mode == 'single' }">
+    <div
+        id="app"
+        :class="{ 'p-list': mode == 'list', 'p-single': mode == 'single' }"
+    >
         <Header></Header>
         <Breadcrumb
             name="家园分享"
@@ -13,22 +16,22 @@
             <Info />
         </Breadcrumb>
         <template v-if="mode == 'single'">
-        <div class="m-fullscreen-wrapper">
-            <single  />
-            <Footer></Footer>
-        </div>
+            <div class="m-fullscreen-wrapper">
+                <single />
+                <Footer></Footer>
+            </div>
         </template>
         <template v-else>
-        <LeftSidebar>
-            <Nav />
-            <Map />
-        </LeftSidebar>
-        <Main :withoutRight="true">
-            <list />
-            <!-- <RightSidebar v-if="isNotSpecial">
+            <LeftSidebar>
+                <Nav />
+            </LeftSidebar>
+            <Main :withoutRight="true">
+                <list />
+                <!-- <RightSidebar v-if="isNotSpecial">
                 <Extend />
             </RightSidebar> -->
-        </Main>
+            </Main>
+            <Map />
         </template>
     </div>
 </template>
@@ -39,7 +42,7 @@ import Nav from "@/components/Nav.vue";
 import Extend from "@/components/Extend.vue";
 import list from "@/components/list.vue";
 import single from "@/components/single.vue";
-import Map from '@/components/Map.vue'
+import Map from "@/components/Map.vue";
 const { getRewrite } = require("@jx3box/jx3box-common/js/utils");
 
 export default {
@@ -52,9 +55,9 @@ export default {
         mode: function() {
             return this.$store.state.mode;
         },
-        isNotSpecial : function (){
-            return this.$route.name != 'furniture'
-        }
+        isNotSpecial: function() {
+            return this.$route.name != "furniture";
+        },
     },
     methods: {},
     watch: {
@@ -77,7 +80,7 @@ export default {
         // Extend,
         list,
         single,
-        Map
+        Map,
     },
 };
 </script>
