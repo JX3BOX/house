@@ -1,5 +1,14 @@
 <template>
     <div class="m-list-nav m-house-nav">
+        <RightSideMsg>
+            <em>家园玩法交流群</em> :
+            <strong
+                ><a href="https://jq.qq.com/?_wv=1027&k=InbtJGcw"
+                    >658035079</a
+                ></strong
+            >
+        </RightSideMsg>
+        
         <h5 class="u-title">
             家园分享
             <!-- <a href="/house" class="u-more">查看全部 &raquo;</a> -->
