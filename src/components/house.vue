@@ -1,5 +1,5 @@
 <template>
-    <el-carousel class="m-house-pics" :interval="4000" type="card" v-if="pics.length" arrow="always">
+    <el-carousel class="m-house-pics" :interval="4000" :type="viewmode" v-if="pics.length" arrow="always">
         <el-carousel-item class="u-item" v-for="(item, i) in pics" :key="i">
             <div class="m-house-pic">
                 <img 
@@ -24,7 +24,8 @@ export default {
     props: ["data",'mode'],
     data: function() {
         return {
-            pics : this.data || []
+            pics : this.data || [],
+            viewmode : ""
         };
     },
     watch : {
@@ -41,7 +42,10 @@ export default {
             return resolveImagePath(val);
         },
     },
-    mounted: function() {},
+    mounted: function() {
+        let isMobile = window.innerWidth < 1025
+        if(!isMobile) this.viewmode = 'card'
+    },
     components: {
     },
 };

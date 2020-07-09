@@ -46,12 +46,6 @@
                 </a>
             </div>
 
-            <div class="m-single-panel">
-                <!-- 收藏 -->
-                <Fav />
-                <!-- 点赞 -->
-                <!-- <Like /> -->
-            </div>
         </header>
 
         <div class="m-single-meta">
@@ -68,12 +62,6 @@
                     mode="single"
                 />
             </div>
-
-            <!-- <el-image-viewer
-                v-if="showViewer"
-                :on-close="closeViewer"
-                :url-list="srcList"
-            /> -->
 
             <div class="m-house-action">
                 <Like
@@ -94,6 +82,7 @@
                     <el-table-column prop="file" label="蓝图下载">
                         <template slot-scope="scope">
                             <Down
+                                v-if="scope.row.file"
                                 classes="u-down el-button el-button--primary el-button--small"
                                 :url="scope.row.file"
                                 :showCount="true"
@@ -108,14 +97,21 @@
         <div class="m-single-post">
             <el-divider content-position="left">JX3BOX</el-divider>
             <div class="m-single-content">
-                <Article
-                    :content="post.post_content"
-                    directorybox="#directory"
-                />
+                <Article :content="post.post_content"/>
             </div>
         </div>
 
-        <div class="m-single-append"></div>
+        <div class="m-single-append">
+            <!-- 操作 -->
+            <div class="m-single-panel" v-if="!loading">
+                <div class="u-minigroup">
+                    <Print class="u-fn" :title="title"/>
+                    <QRcode class="u-fn" />
+                    <Sharing class="u-fn" :title="title"/>
+                </div>
+                <Fav />
+            </div>
+        </div>
 
         <div class="m-single-comment">
             <el-divider content-position="left">评论</el-divider>
@@ -136,7 +132,7 @@
 </template>
 
 <script>
-// import ElImageViewer from "element-ui/packages/image/src/image-viewer";
+import Article from '@jx3box/jx3box-editor/src/Article.vue'
 import house from "@/components/house";
 import lodash from "lodash";
 import { getPost } from "../service/post";
@@ -192,6 +188,9 @@ export default {
             });
             return arr;
         },
+        title : function (){
+            return _.get(this.post,'post_title') || '无标题' 
+        },
     },
     methods: {
         onPreview(el) {
@@ -230,7 +229,7 @@ export default {
         }
     },
     components: {
-        // ElImageViewer,
+        Article,
         house,
     },
 };
