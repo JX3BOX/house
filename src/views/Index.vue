@@ -248,6 +248,7 @@ import {
     showAvatar,
     resolveImagePath,
     buildTarget,
+    postLink
 } from "@jx3box/jx3box-common/js/utils";
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box.json";
 import lodash from "lodash";
@@ -281,7 +282,8 @@ export default {
             drawer: false,
 
             focusdata : '',
-            focus : ''
+            focus : '',
+            isMobile : window.innerWidth < 1025
         };
     },
     computed: {
@@ -394,9 +396,13 @@ export default {
             this.areas_visible = !this.areas_visible;
         },
         preview: function(item) {
-            this.drawer = true;
-            this.focus = item.post
-            this.focusdata = item.post.post_meta.pics
+            if(this.isMobile){
+                location.href = postLink('house',item.post.ID)
+            }else{
+                this.drawer = true;
+                this.focus = item.post
+                this.focusdata = item.post.post_meta.pics
+            }
         },
         skip : function (){
             // this.drawer = false;
