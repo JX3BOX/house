@@ -8,7 +8,7 @@
         <div class="m-info-router">
             <router-link to="/"><i class="el-icon-collection"></i></router-link>
             <a href="/app/furniture" target="_blank"><i class="el-icon-table-lamp"></i></a>
-            <a href="/app/flower" target="_blank"><i class="el-icon-sell"></i></a>
+            <a href="/app/flower" target="_blank">✿</a>
         </div>
     </div>
 </template>

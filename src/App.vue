@@ -15,24 +15,19 @@
             <img slot="logo" svg-inline src="./assets/img/house.svg" />
             <Info />
         </Breadcrumb>
-        <template v-if="mode == 'single'">
-            <div class="m-fullscreen-wrapper">
-                <single />
-                <Footer></Footer>
-            </div>
-        </template>
-        <template v-else>
-            <LeftSidebar>
-                <Nav />
-            </LeftSidebar>
-            <Main :withoutRight="true">
+        <LeftSidebar :open="mode != 'single'">
+            <Nav />
+        </LeftSidebar>
+        <Main :withoutRight="true" :withoutLeft="mode == 'single'">
+            <template v-if="mode == 'single'">
+                <single class="m-fullscreen-wrapper"/>
+            </template>
+            <template v-else>
                 <list />
-                <!-- <RightSidebar v-if="isNotSpecial">
-                <Extend />
-            </RightSidebar> -->
-            </Main>
-            <Map />
-        </template>
+            </template>
+            <Footer></Footer>
+        </Main>
+        <Map />
     </div>
 </template>
 
