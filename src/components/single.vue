@@ -2,6 +2,7 @@
     <div class="m-single-box" :loading="loading">
         <header class="m-single-header">
             <div class="m-single-coord">
+                <i v-if="isOriginal" class="u-original">原创</i> 
                 <span class="u-server">{{ meta.server || "未知服" }}</span>
                 <span class="u-map">{{ post.post_subtype || "未知" }}</span>
                 <span class="u-area">{{ meta.line || "未知" }}线</span>
@@ -162,6 +163,9 @@ export default {
         };
     },
     computed: {
+        isOriginal:function (){
+            return !!~~_.get(this.post, "original")
+        },
         ready: function() {
             return this.$store.state.status;
         },
