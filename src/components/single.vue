@@ -37,7 +37,7 @@
                 <!-- 查看次数 -->
                 <span class="u-views u-sub-block">
                     <i class="el-icon-view"></i>
-                    {{ setting.views }}
+                    {{ stat.views }}
                 </span>
 
                 <!-- 编辑 -->
@@ -68,7 +68,7 @@
                 <Like
                     class="u-like"
                     mode="heart"
-                    :count="post.likes"
+                    :count="stat.likes"
                     :showCount="true"
                     txt="Like!!"
                 />
@@ -87,7 +87,7 @@
                                 classes="u-down el-button el-button--primary el-button--small"
                                 :url="scope.row.file"
                                 :showCount="true"
-                                :count="post.downs"
+                                :count="stat.downs"
                             />
                         </template>
                     </el-table-column>
@@ -108,7 +108,7 @@
                 <div class="u-minigroup">
                     <!-- <Print class="u-fn" :title="title"/> -->
                     <QRcode class="u-fn" />
-                    <Sharing class="u-fn" :title="title"/>
+                    <Sharing class="u-fn" :title="title" :pic="srcList[0]"/>
                 </div>
                 <Fav />
             </div>
@@ -153,7 +153,7 @@ export default {
     data: function() {
         return {
             post: {},
-            setting: {},
+            stat: {},
             meta: {},
             author: {},
             loading: false,
@@ -227,7 +227,7 @@ export default {
                 });
 
             getStat(this.id).then((data) => {
-                if (data) this.setting = this.$store.state.setting = data;
+                if (data) this.stat = this.$store.state.stat = data;
             });
             postStat(this.id);
         }

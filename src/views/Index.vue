@@ -12,6 +12,7 @@
                     v-model="searchType"
                     slot="prepend"
                     placeholder="请选择"
+                    @change="commitSearch"
                 >
                     <el-option label="房号" value="meta_1"></el-option>
                     <el-option label="面积" value="meta_2"></el-option>
@@ -138,6 +139,7 @@
                                     class="u-img"
                                     :src="meta(item, 'pics') | showHousepic"
                                     :alt="item.post.post_title"
+                                    loading="lazy"
                                 />
 
                                 <span class="u-pos">
@@ -223,7 +225,10 @@
         </el-pagination>
 
         <!-- 预览区 -->
-        <el-drawer :visible.sync="drawer" direction="ttb" :append-to-body="true" class="m-archive-preview">
+        <el-drawer :visible.sync="drawer" direction="ttb" :append-to-body="true" title="点击当前图片可放大预览" class="m-archive-preview">
+
+            <div class="u-title">{{focus.post_title}}</div>
+
             <house :data="focusdata" mode="list"/>
 
             <p class="u-details" v-if="focus" >
@@ -266,7 +271,7 @@ export default {
             page: 1, //当前页数
             total: 1, //总条目数
             pages: 1, //总页数
-            per: 50, //每页条目
+            per: 40, //每页条目
             order: "", //排序模式
 
             search: "", //搜索

@@ -11,7 +11,7 @@ let store = {
         pid : 0,
         post : {},
         meta : {},
-        setting : {},
+        stat : {},
         author : {},
         status : false,
 
