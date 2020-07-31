@@ -60,12 +60,12 @@ export default {
     data: function() {
         return {
             map: "广陵邑",
-            maps: ["广陵邑"],
+            maps: ["广陵邑","枫叶泊·乐苑","枫叶泊·天苑"],
         };
     },
     computed: {
         map_thumb: function() {
-            return __ossMirror + "image/house/minimap/" + this.map + ".png";
+            return __ossMirror + "image/house/minimap/" + '广陵邑' + ".png";
         },
         subtype: function() {
             return this.$store.state.subtype;

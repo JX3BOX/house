@@ -413,6 +413,11 @@ export default {
             // this.drawer = false;
         }
     },
+    watch : {
+        subtype : function (){
+            this.loadPosts(1);
+        }
+    },
     mounted: function() {
         this.loadPosts(1);
     },
