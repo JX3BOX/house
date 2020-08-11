@@ -2,18 +2,18 @@
     <singlebox :post="post" :author="author" :stat="stat" v-loading="loading">
         <div class="m-single-meta">
             <div class="m-single-showbox">
-                <!-- <div class="m-single-coord">
-                    <span class="u-server">{{ meta.server || "未知服" }}</span>
-                    <span class="u-map">{{ post.post_subtype || "未知" }}</span>
-                    <span class="u-area">{{ meta.line || "未知" }}线</span>
-                    <span class="u-num">{{ meta.num || "未知" }}号</span>
-                </div> -->
                 <house
                     class="m-single-pics"
                     :data="meta.pics"
                     v-if="meta.pics && meta.pics.length"
                     mode="single"
                 />
+                <div class="m-single-coord">
+                    <span class="u-server">{{ meta.server || "未知服" }}</span>
+                    <span class="u-map">{{ post.post_subtype || "未知" }}</span>
+                    <span class="u-area">{{ meta.line || "未知" }}线</span>
+                    <span class="u-num">{{ meta.num || "未知" }}号</span>
+                </div>
             </div>
 
             <div class="m-house-action">

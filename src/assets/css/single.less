@@ -33,18 +33,25 @@
 }
 
 .m-single-coord {
+    .x;
     span {
+        color: #ccc;
         &:after {
             content: "／";
             padding: 0 10px;
-            color: #888;
             font-weight: 300;
+            color: #aaa;
         }
         &:last-child {
             &::after {
                 .none;
             }
         }
+    }
+}
+@media screen and (max-width:@phone){
+    .m-single-coord{
+        .fz(12px);
     }
 }
 
