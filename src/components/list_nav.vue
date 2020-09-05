@@ -2,13 +2,11 @@
     <div class="m-list-nav m-house-nav">
         <RightSideMsg>
             <em>休闲玩法交流群</em> :
-            <strong
-                ><a href="https://jq.qq.com/?_wv=1027&k=InbtJGcw"
-                    >658035079</a
-                ></strong
-            >
+            <strong>
+                <a href="https://jq.qq.com/?_wv=1027&k=InbtJGcw">658035079</a>
+            </strong>
         </RightSideMsg>
-        
+
         <h5 class="u-title">
             家园分享
             <!-- <a href="/house" class="u-more">查看全部 &raquo;</a> -->
@@ -25,8 +23,7 @@
                     :key="item"
                     :label="item"
                     :value="item"
-                >
-                </el-option>
+                ></el-option>
             </el-select>
 
             <div class="u-map-thumb" @click="openMap">
@@ -37,16 +34,18 @@
 
         <h5 class="u-title">在线应用</h5>
         <div class="m-nav-group">
-            <a href="/app/furniture" target="_blank"
-                ><img svg-inline src="../assets/img/app/f2.svg" /><span
-                    >家具图鉴</span
-                ><i class="u-mark isnew">全新上线</i></a
-            >
-            <a href="/app/flower" target="_blank"
-                ><img svg-inline src="../assets/img/app/flower.svg" /><span
-                    >实时花价</span
-                ><i class="u-mark ishot">精准数据</i></a
-            >
+            <a href="/app/furniture" target="_blank">
+                <img svg-inline src="../assets/img/app/f2.svg" />
+                <span>家具图鉴</span>
+                <em>Furniture</em>
+                <!-- <i class="u-mark isnew">全新上线</i> -->
+            </a>
+            <a href="/app/flower" target="_blank">
+                <img svg-inline src="../assets/img/app/flower.svg" />
+                <span>实时花价</span>
+                <em>Flower</em>
+                <!-- <i class="u-mark ishot">精准数据</i> -->
+            </a>
         </div>
     </div>
 </template>
@@ -60,12 +59,12 @@ export default {
     data: function() {
         return {
             map: "广陵邑",
-            maps: ["广陵邑","枫叶泊·乐苑","枫叶泊·天苑"],
+            maps: ["广陵邑", "枫叶泊·乐苑", "枫叶泊·天苑"],
         };
     },
     computed: {
         map_thumb: function() {
-            return __ossMirror + "image/house/minimap/" + '广陵邑' + ".png";
+            return __ossMirror + "image/house/minimap/" + "广陵邑" + ".png";
         },
         subtype: function() {
             return this.$store.state.subtype;
