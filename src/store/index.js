@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import maps from '@/assets/data/mapindex.json'
 
 Vue.use(Vuex);
 
@@ -15,12 +16,13 @@ let store = {
         author : {},
         status : false,
 
-        map : '广陵邑',
+        map : 455,
         map_visible : false,
     },
     mutations: {
         switchMap : function (state,payload){
-            state.subtype = state.map = payload
+            state.map = payload
+            state.subtype = maps[payload]
         },
         openMap : function (state,payload){
             state.map_visible = true

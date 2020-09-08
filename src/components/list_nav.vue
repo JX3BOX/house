@@ -19,10 +19,10 @@
                 @change="switchMap"
             >
                 <el-option
-                    v-for="item in maps"
-                    :key="item"
-                    :label="item"
-                    :value="item"
+                    v-for="(mapname,mapid) in maps"
+                    :key="mapid"
+                    :label="mapname"
+                    :value="mapid"
                 ></el-option>
             </el-select>
 
@@ -52,19 +52,20 @@
 
 <script>
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box.json";
+import maps from '@/assets/data/mapindex.json'
 
 export default {
     name: "list_nav",
     props: [],
     data: function() {
         return {
-            map: "广陵邑",
-            maps: ["广陵邑", "枫叶泊·乐苑", "枫叶泊·天苑"],
+            map: "455",
+            maps: maps,
         };
     },
     computed: {
         map_thumb: function() {
-            return __ossMirror + "image/house/minimap/" + "广陵邑" + ".png";
+            return __ossMirror + "image/house/minimap/1.png";
         },
         subtype: function() {
             return this.$store.state.subtype;

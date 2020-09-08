@@ -34,7 +34,7 @@
 <script>
 import Info from "@/components/Info.vue";
 import Nav from "@/components/Nav.vue";
-import Extend from "@/components/Extend.vue";
+// import Extend from "@/components/Extend.vue";
 import list from "@/components/list.vue";
 import single from "@/components/single.vue";
 import Map from "@/components/Map.vue";

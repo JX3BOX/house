@@ -2,21 +2,25 @@
     <div class="m-house-map" v-show="visible">
         <div class="m-house-model">
             <div class="u-map">
-                <img class="u-map-bg" :src="mapimg" :alt="currentmap">
+                <img class="u-map-bg" :src="mapimg">
             </div>
             <div class="u-house">
                 <el-tooltip
                     class="item"
                     effect="light"
-                    :content="i + 1 + '号-' + house.name"
                     placement="top"
                     v-for="(house, i) in housegroup"
                     :key="'house-' + i"
                 >
+                    <span slot="content" class="u-house-desc">
+                        {{house.name}} <br/>
+                        面积：{{house.area}} <br>
+                        价格：{{house.price}}
+                    </span>
                     <span
                         class="u-house-item"
                         :class="'u-house-index-' + i"
-                        :style="house.style"
+                        :style="buildStyle(house)"
                         @click="chooseHouse(i + 1)"
                         ><i
                             :class="'u-house-icon u-house-area-' + house.area"
@@ -30,15 +34,13 @@
 </template>
 
 <script>
-import housedata from "../assets/data/housedata";
+import housedata from "@jx3box/jx3box-data/data/house/area.json";
 import Bus from '../store/bus'
-import {__ossMirror} from '@jx3box/jx3box-common/js/jx3box.json'
+import {__ossMirror,__ossRoot} from '@jx3box/jx3box-common/js/jx3box.json'
 export default {
     name: "Map",
     data: function() {
         return {
-            houses : housedata,
-            currentmap: this.map || "广陵邑",
         };
     },
     computed: {
@@ -46,13 +48,13 @@ export default {
             return this.$store.state.map  
         },
         housegroup: function() {
-            return this.houses[this.currentmap];
+            return housedata[this.map];
         },
         visible : function (){
             return this.$store.state.map_visible
         },
         mapimg : function (){
-            return __ossMirror + 'image/map/' + this.currentmap + '.png'
+            return __ossRoot + 'image/house/map/' + this.map + '.png'
         }
     },
     methods: {
@@ -67,6 +69,14 @@ export default {
                 })
             }else{
                 Bus.$emit('chooseHouse',val)
+            }
+        },
+        buildStyle : function (house){
+            let x = (house.x / 1024)*100 + '%'
+            let y = (house.y / 896)*100 + '%'
+            return {
+                left : x,
+                top : y
             }
         }
     },
