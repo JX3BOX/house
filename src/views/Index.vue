@@ -16,8 +16,7 @@
                 >
                     <el-option label="房号" value="meta_1"></el-option>
                     <el-option label="面积" value="meta_2"></el-option>
-                    <el-option label="作者" value="authorname"></el-option>
-                    <el-option label="标题" value="title"></el-option>
+                    <el-option label="关键词" value="search"></el-option>
                 </el-select>
                 <el-switch
                     class="u-switch u-hasdata"
@@ -275,7 +274,7 @@ export default {
             order: "", //排序模式
 
             search: "", //搜索
-            searchType: "meta_1", //搜索类型
+            searchType: "search", //搜索类型
 
             hasData: false,
 
