@@ -252,7 +252,8 @@ import {
     showAvatar,
     resolveImagePath,
     buildTarget,
-    postLink
+    postLink,
+    getAppType
 } from "@jx3box/jx3box-common/js/utils";
 import { __ossMirror } from "@jx3box/jx3box-common/js/jx3box.json";
 import lodash from "lodash";
@@ -339,7 +340,8 @@ export default {
             return showAvatar(val);
         },
         postLink: function(val) {
-            return "./?pid=" + val;
+            // return "./?pid=" + val;
+            return location.origin + '/' + getAppType() + '/' + val;
         },
         dateFormat: function(val) {
             return dateFormat(val);

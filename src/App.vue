@@ -20,7 +20,7 @@
         </LeftSidebar>
         <Main :withoutRight="true" :withoutLeft="mode == 'single'">
             <template v-if="mode == 'single'">
-                <single class="m-fullscreen-wrapper"/>
+                <single class="m-fullscreen-wrapper" />
             </template>
             <template v-else>
                 <list />
@@ -38,7 +38,8 @@ import Nav from "@/components/Nav.vue";
 import list from "@/components/list.vue";
 import single from "@/components/single.vue";
 import Map from "@/components/Map.vue";
-const { getRewrite } = require("@jx3box/jx3box-common/js/utils");
+import {getPID,getAppID,getQuery,getAppType} from '@jx3box/jx3box-common/js/utils'
+import {__Root} from '@jx3box/jx3box-common/js/jx3box.json'
 
 export default {
     name: "App",
@@ -64,10 +65,24 @@ export default {
         },
     },
     beforeCreate: function() {
-        let params = new URLSearchParams(location.search);
-        this.$store.state.pid = params.get("pid") || getRewrite("pid");
-        this.$store.state.mode = this.$store.state.pid ? "single" : "list";
-        this.$store.state.subtype = this.$route.params.subtype;
+        let id = getAppID();
+        let pid = getPID();
+
+        // 旧单页链接跳转
+        if (!id && pid) {
+            let type = getAppType();
+            let test = __Root + type + "/" + pid;
+            location.href = __Root + type + "/" + pid;
+        }
+
+        // 处理模式 & 文章ID
+        this.$store.state.mode = id ? "single" : "list";
+        this.$store.state.pid = id;
+
+        // 捕获subtype
+        if (this.$store.state.mode == "list") {
+            this.$store.state.subtype = getQuery("subtype");
+        }
     },
     components: {
         Info,
